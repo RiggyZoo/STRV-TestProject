@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Hind-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/Hind-Bold.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'Hind-Light';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/Hind-Light.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'Hind-Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/Hind-Medium.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'Hind-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/Hind-Regular.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'Hind-SemiBold';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/Hind-SemiBold.ttf") format('opentype');
+}
+
+@font-face {
+    font-family: 'PlayfairDisplay-Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/PlayfairDisplay-Bold.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'PlayfairDisplay-Black';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/PlayfairDisplay-Black.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'PlayfairDisplay-BlackItalic';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/PlayfairDisplay-BlackItalic.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'PlayfairDisplay-Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/PlayfairDisplay-Italic.ttf") format('opentype');
+}
+@font-face {
+    font-family: 'PlayfairDisplay-Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assets/fonts/PlayfairDisplay-Regular.ttf") format('opentype');
+}
+
+

@@ -1,0 +1,70 @@
+{
+  "plugins": ["react", "prettier", "import-helpers"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "eslint-config-prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-module-boundary-types": ["off"],
+    "@typescript-eslint/no-empty-function": ["off"],
+    "react-hooks/exhaustive-deps": "off",
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "ignore",
+        "groups": [
+          "/^react$/",
+          "/^react-router-dom/",
+          "/^react-i18next/",
+          "/formik/",
+          "/yup/",
+          "module",
+          "/^pages/",
+          "/^modules/",
+          "/^contexts/",
+          "/^helpers/",
+          "/^hooks/",
+          "/^services/",
+          "/^containers/",
+          "/^layouts/",
+          "/^generic/",
+          "/^icons/",
+          "/^assets/",
+          "/^types/",
+          ["parent", "sibling", "index"],
+          "/^./styles/"
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "jest": true
+  }
+}
