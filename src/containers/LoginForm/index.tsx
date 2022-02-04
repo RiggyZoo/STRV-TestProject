@@ -1,7 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import * as Yup from 'yup'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { Container, FieldsContainer, MainTitle, Title } from './styles'
+import {
+  Container,
+  ErrorMessage,
+  FieldContainer,
+  FieldsContainer,
+  MainTitle,
+  Title,
+} from './styles'
 import { InputField } from '../InputContainer'
 import { Button } from '../../components/Button'
 import { Buttons, ButtonSize } from '../../components/Button/Button'
@@ -11,7 +18,7 @@ interface LoginForm {
   email: string
   password: string
 }
-const LoginForm = () => {
+const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   const [isError, setIsError] = useState<boolean>(false)
   const initValues = {
     email: '',
@@ -26,14 +33,12 @@ const LoginForm = () => {
       console.log(data)
       if (status === 400) {
         setIsError(true)
+        actions.setErrors({ email: ' ', password: ' ' })
       }
       console.log(jwt)
     }
     fetchData(values)
   }
-  const validationSchema = Yup.object().shape({
-    email: Yup.string().required('sd'),
-  })
 
   useEffect(() => {
     const p = {
@@ -43,34 +48,36 @@ const LoginForm = () => {
   }, [])
 
   return (
-    <Formik
-      initialValues={initValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
+    <Formik initialValues={initValues} onSubmit={handleSubmit}>
       {(props) => (
         <Form>
-          <Container>
+          <Container isBreakPoint={isBreakPoint}>
             <MainTitle>Sign in to Eventio.</MainTitle>
 
             {isError ? (
-              <div>is Error</div>
+              <ErrorMessage>
+                Oops! That email and password combination is not valid.
+              </ErrorMessage>
             ) : (
               <Title>Enter your details below.</Title>
             )}
             <FieldsContainer>
-              <Field
-                type="text"
-                name="email"
-                label="Email"
-                component={InputField}
-              />
-              <Field
-                type="password"
-                name="password"
-                label="Password"
-                component={InputField}
-              />
+              <FieldContainer>
+                <Field
+                  type="text"
+                  name="email"
+                  label="Email"
+                  component={InputField}
+                />
+              </FieldContainer>
+              <FieldContainer>
+                <Field
+                  type="password"
+                  name="password"
+                  label="Password"
+                  component={InputField}
+                />
+              </FieldContainer>
             </FieldsContainer>
             <div>
               <Button

@@ -23,7 +23,7 @@ export const InputField = styled.input<InputProps>`
   border: none;
 
   font-family: Hind-Regular, sans-serif;
-  border-bottom: 2px solid
+  border-bottom: 1px solid
     ${({ errors }) => (errors ? colors.inputError : colors.inputNormal)};
   background-color: transparent;
   padding: 0 0 0.5rem;

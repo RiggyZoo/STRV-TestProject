@@ -2,15 +2,21 @@ import styled from 'styled-components'
 import RightImage from '../../assets/img/Image.png'
 import { colors } from '../../styles/themes'
 
-export const Container = styled.div`
+interface IsBreakpointProp {
+  isBreakPoint: boolean
+}
+export const Container = styled.div<IsBreakpointProp>`
   position: relative;
-  display: flex;
+  display: ${({ isBreakPoint }) => (!isBreakPoint ? 'block' : 'flex')};
   flex-direction: row;
-  z-index: 10;
+  min-height: ${({ isBreakPoint }) => isBreakPoint && '100%'};
 `
 
 export const TopPart = styled.div`
-  margin: 0 2rem;
+  width: 100%;
+  padding: 0 3rem;
+  display: flex;
+  position: absolute;
   justify-content: space-between;
 `
 export const RightContent = styled.div`
@@ -47,6 +53,9 @@ export const Content = styled.div`
 
   justify-content: center;
   align-items: center;
+  @media (max-width: 415px) {
+    margin: 0 1.5rem;
+  }
 `
 export const Line = styled.div`
   &:after {
