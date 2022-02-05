@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+
+import LoginPage from './containers/LoginPage'
+import { useCurrentUser } from './contexts/CurrentUser'
+import { getUser } from './helpers/currentUser'
+import Routes from './pages/routes'
+import { getToken } from './utils/token'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const { userData, setUserData, authed, setAuthed } = useCurrentUser()
+  const [localStoreHasJWT, setLocalStoreHasJWT] = useState<boolean>(
+    Boolean(getToken()),
+  )
+  const [auther, setAuther] = useState(false)
+  console.log(authed, 'authed from app')
+
+  useEffect(() => {
+    if (localStoreHasJWT) {
+      setAuthed(true)
+    }
+    console.log(authed, 'authed from app')
+  }, [localStoreHasJWT])
+
+  return <Routes localStoreHasJWT={localStoreHasJWT} authed={authed} />
 }
 
-export default App;
+export default App
