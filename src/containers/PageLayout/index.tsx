@@ -1,11 +1,33 @@
 import React, { FC } from 'react'
-import PageHeader from '../PageHeader'
-import { Container, Content } from './styles'
+import {
+  Container,
+  Content,
+  LeftContent,
+  PageHeader,
+  CloseButton,
+  SvgElement,
+} from './styles'
+import CloseIcon from '../../assets/icons/icon-close.svg'
+import LeftContentSvg from '../../assets/icons/E..svg'
 
-const PageLayout: FC = ({ children }) => {
+interface PageLayoutProps {
+  isModal?: boolean
+  onClose?: () => void
+}
+const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
   return (
     <Container>
-      <PageHeader />
+      <PageHeader>
+        <LeftContent src={LeftContentSvg} />
+        {isModal ? (
+          <CloseButton onClick={onClose}>
+            <SvgElement src={CloseIcon} alt="icon" />
+            Close
+          </CloseButton>
+        ) : (
+          <div>dropdown</div>
+        )}
+      </PageHeader>
       <Content>{children}</Content>
     </Container>
   )

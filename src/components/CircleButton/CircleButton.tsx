@@ -24,7 +24,7 @@ const CircleButton: FC<ICircleButtonProps> = ({ theme, ...rest }) => {
     themes[theme || 'default']
 
   return (
-    <Style>
+    <Style {...rest}>
       <SvgElement
         src={theme === CircleButtons.confirm ? SaveIcon : PlusIcon}
         alt="icon"

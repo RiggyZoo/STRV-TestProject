@@ -8,6 +8,11 @@ import { useParams } from 'react-router-dom'
 import { EventsFilter } from '../../containers/EventsFilter'
 import { EventsFilterType } from '../../types/listOfRoutes'
 import { attendEvent, getAllEvents, unattendEvent } from '../../services/events'
+import { CircleButton } from '../../components/CircleButton'
+import { CircleButtons } from '../../components/CircleButton/CircleButton'
+import StickyButtonContainer from '../../containers/StickyButtonContainer'
+import PageLayout from '../../containers/PageLayout'
+import CreateEventModal from '../../containers/CreateEventModal'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -17,7 +22,7 @@ interface Params {
 const EventsPage = () => {
   const ref = useRef<RefObject<HTMLDivElement>>()
   const { filter } = useParams<Params>()
-
+  const [isModal, setIsModal] = useState(false)
   const [reset, setReset] = useState(false)
   const [event, setEvents] = useState<[]>()
   const { userData } = useCurrentUser()
@@ -118,26 +123,39 @@ const EventsPage = () => {
 
   return (
     <>
-      <EventsFilter filterType={filter} />
-      <Container>
-        {event &&
-          event.map((item: any) => (
-            <EventBox key={item._id}>
-              <EventBox.Date date={item.startsAt} />
-              <EventBox.Name>{item.title}</EventBox.Name>
-              <EventBox.Owner>
-                {item.owner.firstName} {item.owner.lastName}
-              </EventBox.Owner>
-              <EventBox.Description>{item.description}</EventBox.Description>
-              <EventBox.Capacity
-                attendees={item.attendees.length}
-                capacity={item.capacity}
-              >
-                {defineButton(item)}
-              </EventBox.Capacity>
-            </EventBox>
-          ))}
-      </Container>
+      {isModal && <CreateEventModal onClose={() => setIsModal(false)} />}
+      {!isModal && (
+        <PageLayout>
+          <EventsFilter filterType={filter} />
+          <Container>
+            {event &&
+              event.map((item: any) => (
+                <EventBox key={item._id}>
+                  <EventBox.Date date={item.startsAt} />
+                  <EventBox.Name>{item.title}</EventBox.Name>
+                  <EventBox.Owner>
+                    {item.owner.firstName} {item.owner.lastName}
+                  </EventBox.Owner>
+                  <EventBox.Description>
+                    {item.description}
+                  </EventBox.Description>
+                  <EventBox.Capacity
+                    attendees={item.attendees.length}
+                    capacity={item.capacity}
+                  >
+                    {defineButton(item)}
+                  </EventBox.Capacity>
+                </EventBox>
+              ))}
+          </Container>
+        </PageLayout>
+      )}
+      <StickyButtonContainer>
+        <CircleButton
+          theme={CircleButtons.default}
+          onClick={() => setIsModal(true)}
+        />
+      </StickyButtonContainer>
     </>
   )
 }

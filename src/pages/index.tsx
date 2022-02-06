@@ -16,11 +16,9 @@ const ListOfPages = () => {
   console.log(history, 'paramas')
   return (
     <Switch>
-      <PageLayout>
-        <Route path={ListOfRoutes.events} component={EventsPage} />
-        <Route exact path={ListOfRoutes.errorPage} component={ErrorPage} />
-        {/* <Redirect to="/404" />*/}
-      </PageLayout>
+      <Route path={ListOfRoutes.events} component={EventsPage} />
+      <Route exact path={ListOfRoutes.errorPage} component={ErrorPage} />
+      {/* <Redirect to="/404" />*/}
     </Switch>
   )
 }
