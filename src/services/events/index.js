@@ -21,9 +21,9 @@ export const deleteEvent = async (id) => {
 }
 
 export const attendEvent = async (id) => {
-  return await connector.post(`events/${id}/attendees/me`, null)
+  return await connector.post(`events/${id}/attendees/me`)
 }
 
 export const unattendEvent = async (id) => {
-  return await connector.delete(`events/${id}/attendees/me`, null)
+  return await connector.delete(`events/${id}/attendees/me`)
 }

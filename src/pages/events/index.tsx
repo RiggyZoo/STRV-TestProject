@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { EventBox } from '../../components/EventBox'
-import { connector } from '../../connector/connector'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 import { Button } from '../../components/Button'
 import { Buttons, ButtonSize } from '../../components/Button/Button'
@@ -8,7 +7,7 @@ import { Container } from './styles'
 import { useParams } from 'react-router-dom'
 import { EventsFilter } from '../../containers/EventsFilter'
 import { EventsFilterType } from '../../types/listOfRoutes'
-import { getAllEvents } from '../../services/events'
+import { attendEvent, getAllEvents, unattendEvent } from '../../services/events'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -16,7 +15,10 @@ interface Params {
   filter: FilterType
 }
 const EventsPage = () => {
+  const ref = useRef<RefObject<HTMLDivElement>>()
   const { filter } = useParams<Params>()
+
+  const [reset, setReset] = useState(false)
   const [event, setEvents] = useState<[]>()
   const { userData } = useCurrentUser()
   const user = localStorage.getItem('user')
@@ -25,28 +27,27 @@ const EventsPage = () => {
   useEffect(() => {
     switch (filter) {
       case 'all':
-        {
-          allEvents()
-        }
+        allEvents()
         break
+
       case 'past':
-        {
-          fetchPastEvents()
-        }
+        fetchPastEvents()
         break
+
       case 'future':
-        {
-          fetchFutureEvents()
-        }
+        fetchFutureEvents()
         break
+
       default: {
         allEvents()
       }
     }
-  }, [filter])
+  }, [filter, reset])
 
   const allEvents = async () => {
     const { data } = await getAllEvents()
+    const events = data
+
     setEvents(data)
   }
 
@@ -66,6 +67,55 @@ const EventsPage = () => {
     setEvents(futureEvents)
   }
 
+  const attendToEvent = async (id: string) => {
+    const { status } = await attendEvent(id)
+    setReset(!reset)
+  }
+
+  //TODO: look into deletion method
+  const unattendToEvent = async (id: string) => {
+    const q = await unattendEvent(id)
+    setReset(!reset)
+  }
+
+  const defineButton = (event: any) => {
+    const isAttended = event.attendees.filter(
+      (item: any) => item?._id === los._id,
+    ).length
+    const isMyEvent = event.owner._id === los._id
+    const isPast = new Date(event.startsAt) < new Date()
+    if (isMyEvent) {
+      return isPast ? null : (
+        <Button theme={Buttons.grey} size={ButtonSize.small} loading={false}>
+          edit
+        </Button>
+      )
+    }
+    if (!!isAttended) {
+      return isPast ? null : (
+        <Button
+          theme={Buttons.red}
+          size={ButtonSize.small}
+          loading={false}
+          onClick={() => unattendToEvent(event._id)}
+        >
+          Leave
+        </Button>
+      )
+    } else {
+      return isPast ? null : (
+        <Button
+          theme={Buttons.default}
+          size={ButtonSize.small}
+          loading={false}
+          onClick={() => attendToEvent(event._id)}
+        >
+          join
+        </Button>
+      )
+    }
+  }
+
   return (
     <>
       <EventsFilter filterType={filter} />
@@ -83,15 +133,7 @@ const EventsPage = () => {
                 attendees={item.attendees.length}
                 capacity={item.capacity}
               >
-                <Button
-                  theme={
-                    item.owner._id === los._id ? Buttons.red : Buttons.grey
-                  }
-                  size={ButtonSize.small}
-                  loading={false}
-                >
-                  Edit
-                </Button>
+                {defineButton(item)}
               </EventBox.Capacity>
             </EventBox>
           ))}
