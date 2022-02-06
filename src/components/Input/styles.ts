@@ -17,6 +17,9 @@ export const Container = styled.div<InputProps>`
 
 export const InputField = styled.input<InputProps>`
   outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   width: 100%;
   font-size: 1.125rem;
   line-height: 1.5rem;
