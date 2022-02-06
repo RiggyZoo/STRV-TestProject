@@ -21,6 +21,10 @@ function App() {
     console.log(authed, 'authed from app')
   }, [localStoreHasJWT])
 
+  useEffect(() => {
+    setLocalStoreHasJWT(Boolean(getUser()))
+  }, [authed])
+
   return <Routes localStoreHasJWT={localStoreHasJWT} authed={authed} />
 }
 

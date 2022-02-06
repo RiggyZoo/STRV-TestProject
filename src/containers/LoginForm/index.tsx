@@ -25,7 +25,7 @@ interface LoginForm {
 }
 const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   const [isError, setIsError] = useState<boolean>(false)
-  const { setAuthed } = useCurrentUser()
+  const { setAuthed, setUserData } = useCurrentUser()
   const history = useHistory()
 
   const initValues = {
@@ -38,11 +38,15 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   ) => {
     actions.setSubmitting(true)
     const { data, jwt, status } = await login(values)
-
+    console.log(data, 'daraa')
     if (data && status === 200) {
-      setToken(jwt)
+      setUserData(data)
       setAuthed(true)
-      window.location.reload()
+      setToken(jwt)
+      window.localStorage.setItem('user', JSON.stringify(data))
+      history.push('/events')
+
+      /*  window.location.reload()*/
     }
 
     if (status === 400) {

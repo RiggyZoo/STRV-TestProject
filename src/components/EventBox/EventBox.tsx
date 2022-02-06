@@ -12,21 +12,7 @@ export interface IEventBoxProps {
   children: React.ReactNode
 }
 export const EventBox = ({ children }: IEventBoxProps) => {
-  return (
-    <Container>
-      <Date date="2022-03-01T21:22:14.277Z" />
-      <Name>Nikita</Name>
-      <Owner>Filias</Owner>
-      <Description>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, nemo!
-      </Description>
-      <Capacity attendees={3} capacity={10}>
-        <Button theme={Buttons.red} size={ButtonSize.small} loading={false}>
-          Leave
-        </Button>
-      </Capacity>
-    </Container>
-  )
+  return <Container>{children}</Container>
 }
 
 EventBox.Date = Date
