@@ -4,6 +4,7 @@ import { Container, InputField, Label, ErrorMessage } from './styles'
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   ref?: ForwardedRef<HTMLInputElement>
   required?: boolean
+  disabled?: boolean
   isTouched?: boolean
   error?: string
   label?: string
@@ -11,6 +12,10 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input: FC<InputProps> = forwardRef(
   ({ required, isTouched, error, label, name, disabled, ...rest }, ref) => {
+    if (rest.placeholder === undefined) {
+      rest.placeholder = ' '
+    }
+    console.log(disabled, 'disabled')
     return (
       <Container errors={Boolean(isTouched && error)}>
         <InputField

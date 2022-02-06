@@ -23,7 +23,7 @@ export enum Buttons {
   refresh = 'refreshButton',
 }
 export enum ButtonSize {
-  main = '0.3rem 4rem',
+  main = '0.3rem 2.5rem',
   small = '0.15rem 1.5rem',
 }
 

@@ -21,7 +21,6 @@ export const InputField = styled.input<InputProps>`
   font-size: 1.125rem;
   line-height: 1.5rem;
   border: none;
-
   font-family: Hind-Regular, sans-serif;
   border-bottom: 1px solid
     ${({ errors }) => (errors ? colors.inputError : colors.inputNormal)};
@@ -42,7 +41,7 @@ export const InputField = styled.input<InputProps>`
     disabled &&
     css`
       cursor: not-allowed;
-      opacity: 0.7;
+      pointer-events: none;
     `}
   &::placeholder {
     color: transparent;

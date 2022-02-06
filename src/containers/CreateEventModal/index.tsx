@@ -13,12 +13,33 @@ import {
 import { InputField } from '../InputContainer'
 import { Button } from '../../components/Button'
 import { Buttons, ButtonSize } from '../../components/Button/Button'
+import { DatePickerField } from '../DatePickerField'
+import { validationSchema } from './schema'
 
 interface CreateModalProps {
   onClose: () => void
 }
+
+interface EventForm {
+  title: string
+  description: string
+  startsAt: string
+  capacity: number
+}
 const CreateEventModal: FC<CreateModalProps> = ({ onClose }) => {
-  const initValues = {}
+  const initValues = {
+    capacity: '',
+    title: '',
+    description: '',
+    startsAt: '',
+    time: '',
+  }
+
+  const createEventHandler = (values: any, actions: FormikHelpers<any>) => {
+    console.log(values)
+  }
+
+  //TODO: Separate form from this file
   return (
     <PageLayout isModal={true} onClose={onClose}>
       <ModalWrapper>
@@ -26,14 +47,18 @@ const CreateEventModal: FC<CreateModalProps> = ({ onClose }) => {
         <Container>
           <Title>Create new event</Title>
           <SubTitle>Enter details below.</SubTitle>
-          <Formik initialValues={initValues} onSubmit={() => alert('submit')}>
+          <Formik
+            initialValues={initValues}
+            validationSchema={validationSchema}
+            onSubmit={createEventHandler}
+          >
             {(props) => (
               <Form>
                 <FieldsContainer>
                   <FieldContainer>
                     <Field
                       type="text"
-                      name="Title"
+                      name="title"
                       label="Title"
                       component={InputField}
                     />
@@ -41,44 +66,46 @@ const CreateEventModal: FC<CreateModalProps> = ({ onClose }) => {
                   <FieldContainer>
                     <Field
                       type="text"
-                      name="Description"
+                      name="description"
                       label="Description"
                       component={InputField}
                     />
                   </FieldContainer>
                   <FieldContainer>
                     <Field
-                      type="date"
-                      name="Date"
+                      name="startsAt"
+                      minDate={new Date()}
                       label="Date"
-                      component={InputField}
+                      component={DatePickerField}
                     />
                   </FieldContainer>
                   <FieldContainer>
                     <Field
-                      type="time"
-                      name="Time"
+                      selectedDateFromField={props.values.startsAt}
+                      isTime={true}
+                      disabled={!props.values.startsAt}
+                      minDate={new Date()}
+                      name="time"
                       label="Time"
-                      component={InputField}
+                      component={DatePickerField}
                     />
                   </FieldContainer>
                   <FieldContainer>
                     <Field
-                      type="text"
-                      name="Capacity"
+                      name="capacity"
                       label="Capacity"
                       component={InputField}
                     />
                   </FieldContainer>
                 </FieldsContainer>
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
                   <Button
                     type="submit"
                     theme={Buttons.default}
                     size={ButtonSize.main}
                     loading={false}
                   >
-                    Sign in
+                    create new event
                   </Button>
                 </div>
               </Form>
