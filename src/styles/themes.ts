@@ -14,6 +14,7 @@ export const colors = {
   black: '#000000',
   inputError: '#FF4081',
   greySecondary: '#949EA8',
+  linkButtonNonActive: '#A9AEB4',
   eventBoxDateField: '#CACDD0',
   transparent: 'transparent',
   navbar: 'rgba(76, 16, 112, 0.7)',

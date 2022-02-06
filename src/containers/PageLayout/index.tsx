@@ -1,7 +1,14 @@
 import React, { FC } from 'react'
+import PageHeader from '../PageHeader'
+import { Container, Content } from './styles'
 
 const PageLayout: FC = ({ children }) => {
-  return <div style={{ background: '#F9F9FB', height: '100%' }}>{children}</div>
+  return (
+    <Container>
+      <PageHeader />
+      <Content>{children}</Content>
+    </Container>
+  )
 }
 
 export default PageLayout
