@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { colors } from '../../styles/themes'
 import { ButtonSize } from './Button'
+import Cursor from '../../assets/icons/Pointer.png'
 
 interface IButtonProps {
   size: ButtonSize
@@ -10,7 +11,7 @@ export const DefaultButton = styled.button<IButtonProps>`
   position: relative;
   padding: ${({ size }) => size};
   line-height: 2rem;
-  cursor: pointer;
+  cursor: url(${Cursor}), pointer;
   text-transform: uppercase;
   border-radius: 4px;
   background: ${colors.primary};

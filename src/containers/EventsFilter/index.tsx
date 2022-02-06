@@ -1,7 +1,9 @@
 import React, { FC } from 'react'
 import { Container } from './styles'
 import { LinkButton } from '../../components/LinkButton'
-import { Link, useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
+import { CircleButton } from '../../components/CircleButton'
+import { CircleButtons } from '../../components/CircleButton/CircleButton'
 
 interface EventsFilterProps {
   filterType: string
