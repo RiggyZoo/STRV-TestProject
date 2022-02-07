@@ -67,7 +67,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
           eventID,
         )
       : await createEvent({
-          values,
+          ...values,
           startsAt: new Date(correctTimeAndDate),
         })
 
