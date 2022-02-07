@@ -41,16 +41,24 @@ const DatePickerContainer: FC<IDatePicker> = ({
 }) => {
   const filterPassedTime = (time: any) => {
     const currentDate = new Date()
-    if (rest.selectedDateFromField?.getDate() !== currentDate.getDate())
+    console.log(rest, 'resr')
+    if (
+      new Date(rest.selectedDateFromField || new Date())?.getDate() !==
+      currentDate.getDate()
+    )
       return true
     const selectedDate = new Date(time)
 
     return currentDate.getTime() < selectedDate.getTime()
   }
   useEffect(() => {
-    if (onChange) {
-      onChange(null)
+    if (!rest.selectedDateFromField) {
+      // @ts-ignore
+      onChange(rest.selectedDateFromField)
     }
+    /*  if (onChange) {
+      onChange(null)
+    }*/
   }, [rest.selectedDateFromField])
 
   return (

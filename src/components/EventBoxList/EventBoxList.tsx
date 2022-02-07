@@ -8,9 +8,10 @@ import Capacity from './Capacity'
 
 export interface IEventBoxProps {
   children: React.ReactNode
+  onClick?: (event: any) => void
 }
-export const EventBoxList = ({ children }: IEventBoxProps) => {
-  return <Container>{children}</Container>
+export const EventBoxList = ({ children, onClick }: IEventBoxProps) => {
+  return <Container onClick={onClick}>{children}</Container>
 }
 
 EventBoxList.Date = Date

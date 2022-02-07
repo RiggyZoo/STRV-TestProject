@@ -19,7 +19,7 @@ interface PageLayoutProps {
 }
 const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
   const { userData, setUserData, setAuthed } = useCurrentUser()
-  console.log(userData, 'userdata')
+
   const onLogout = () => {
     removeAll()
     setUserData(undefined)

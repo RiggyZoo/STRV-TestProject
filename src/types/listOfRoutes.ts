@@ -1,5 +1,6 @@
 export enum ListOfRoutes {
   events = '/events/:filter(all|future|past)',
+  eventDetail = '/events/:id/detail',
   login = '/login',
   errorPage = '/404',
 }

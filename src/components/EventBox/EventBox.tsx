@@ -10,9 +10,15 @@ import { Buttons, ButtonSize } from '../Button/Button'
 
 export interface IEventBoxProps {
   children: React.ReactNode
+  style?: React.CSSProperties
+  onClick?: () => void
 }
-export const EventBox = ({ children }: IEventBoxProps) => {
-  return <Container>{children}</Container>
+export const EventBox = ({ children, style, onClick }: IEventBoxProps) => {
+  return (
+    <Container onClick={onClick} style={style}>
+      {children}
+    </Container>
+  )
 }
 
 EventBox.Date = Date

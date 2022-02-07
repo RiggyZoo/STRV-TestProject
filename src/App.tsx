@@ -22,9 +22,11 @@ function App() {
   }, [localStoreHasJWT])
 
   useEffect(() => {
-    const user = JSON.parse(window.localStorage.getItem('user') || ' ')
-    setUserData(user)
     setLocalStoreHasJWT(Boolean(getUser()))
+    if (localStoreHasJWT) {
+      const user = JSON.parse(window.localStorage.getItem('user') || ' ')
+      setUserData(user)
+    }
   }, [authed])
 
   return <Routes localStoreHasJWT={localStoreHasJWT} authed={authed} />

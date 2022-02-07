@@ -4,7 +4,7 @@ import { useCurrentUser } from '../../contexts/CurrentUser'
 import { Button } from '../../components/Button'
 import { Buttons, ButtonSize } from '../../components/Button/Button'
 import { Container } from './styles'
-import { useParams } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import { EventsFilter } from '../../containers/EventsFilter'
 import { EventsFilterType } from '../../types/listOfRoutes'
 import { attendEvent, getAllEvents, unattendEvent } from '../../services/events'
@@ -14,6 +14,7 @@ import StickyButtonContainer from '../../containers/StickyButtonContainer'
 import PageLayout from '../../containers/PageLayout'
 import CreateEventModal from '../../containers/CreateEventModal'
 import { EventBoxList } from '../../components/EventBoxList'
+import { defineButton } from '../../helpers/defineButton'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -26,9 +27,14 @@ const EventsPage = () => {
   const [isModal, setIsModal] = useState(false)
   const [reset, setReset] = useState(false)
   const [event, setEvents] = useState<[]>()
+  const history = useHistory()
   const { userData, viewMode } = useCurrentUser()
   const user = localStorage.getItem('user')
   const los = JSON.parse(user ? user : ' ')
+
+  const onReset = () => {
+    setReset(!reset)
+  }
 
   useEffect(() => {
     switch (filter) {
@@ -73,62 +79,9 @@ const EventsPage = () => {
     setEvents(futureEvents)
   }
 
-  const attendToEvent = async (id: string) => {
-    const { status } = await attendEvent(id)
-    setReset(!reset)
+  const pushToDetail = (event: any, id: any) => {
+    history.push(`/events/${id}/detail`)
   }
-
-  //TODO: look into deletion method
-  const unattendToEvent = async (id: string) => {
-    const q = await unattendEvent(id)
-    setReset(!reset)
-  }
-
-  const defineButton = (event: any) => {
-    const isAttended = event.attendees.filter(
-      (item: any) => item?._id === los._id,
-    ).length
-    const isMyEvent = event.owner._id === los._id
-    const isPast = new Date(event.startsAt) < new Date()
-    if (isMyEvent) {
-      return isPast ? null : (
-        <Button
-          theme={Buttons.grey}
-          size={ButtonSize.small}
-          loading={false}
-          style={{ justifySelf: 'end' }}
-        >
-          edit
-        </Button>
-      )
-    }
-    if (!!isAttended) {
-      return isPast ? null : (
-        <Button
-          theme={Buttons.red}
-          size={ButtonSize.small}
-          loading={false}
-          style={{ justifySelf: 'end' }}
-          onClick={() => unattendToEvent(event._id)}
-        >
-          Leave
-        </Button>
-      )
-    } else {
-      return isPast ? null : (
-        <Button
-          theme={Buttons.default}
-          size={ButtonSize.small}
-          loading={false}
-          style={{ justifySelf: 'end' }}
-          onClick={() => attendToEvent(event._id)}
-        >
-          join
-        </Button>
-      )
-    }
-  }
-
   return (
     <>
       {isModal && (
@@ -144,7 +97,10 @@ const EventsPage = () => {
             {event &&
               event.map((item: any) =>
                 viewMode === 'list' ? (
-                  <EventBoxList key={item._id}>
+                  <EventBoxList
+                    key={item._id}
+                    onClick={() => history.push(`/events/${item._id}/detail`)}
+                  >
                     <EventBoxList.Name>{item.title}</EventBoxList.Name>
                     <EventBoxList.Description>
                       {item.description}
@@ -157,10 +113,13 @@ const EventsPage = () => {
                       attendees={item.attendees.length}
                       capacity={item.capacity}
                     />
-                    {defineButton(item)}
+                    {defineButton(los, item, history, onReset)}
                   </EventBoxList>
                 ) : (
-                  <EventBox key={item._id}>
+                  <EventBox
+                    key={item._id}
+                    onClick={() => history.push(`/events/${item._id}/detail`)}
+                  >
                     <EventBox.Date date={item.startsAt} />
                     <EventBox.Name>{item.title}</EventBox.Name>
                     <EventBox.Owner>
@@ -173,7 +132,7 @@ const EventsPage = () => {
                       attendees={item.attendees.length}
                       capacity={item.capacity}
                     >
-                      {defineButton(item)}
+                      {defineButton(los, item, history, onReset)}
                     </EventBox.Capacity>
                   </EventBox>
                 ),
@@ -181,12 +140,14 @@ const EventsPage = () => {
           </Container>
         </PageLayout>
       )}
-      <StickyButtonContainer>
-        <CircleButton
-          theme={CircleButtons.default}
-          onClick={() => setIsModal(true)}
-        />
-      </StickyButtonContainer>
+      {!isModal && (
+        <StickyButtonContainer>
+          <CircleButton
+            theme={CircleButtons.default}
+            onClick={() => setIsModal(true)}
+          />
+        </StickyButtonContainer>
+      )}
     </>
   )
 }

@@ -3,8 +3,8 @@ import { Container, CapacityContainer } from './styles'
 import UserIcon from './icon-user.svg'
 
 interface ICapacityProps {
-  attendees: number
-  capacity: number
+  attendees?: number
+  capacity?: number
 }
 const Capacity: FC<ICapacityProps> = ({ children, attendees, capacity }) => {
   return (

@@ -3,7 +3,7 @@ import { Container } from './styles'
 import { formatDate } from '../../../helpers/date'
 
 interface IDateProps {
-  date: string
+  date?: string
 }
 const Date: FC<IDateProps> = ({ date }) => {
   return <Container>{formatDate(date)}</Container>
