@@ -9,12 +9,21 @@ import {
 } from './styles'
 import CloseIcon from '../../assets/icons/icon-close.svg'
 import LeftContentSvg from '../../assets/icons/E..svg'
+import { Dropdown } from '../../components/Dropdown'
+import { useCurrentUser } from '../../contexts/CurrentUser'
+import { removeAll } from '../../utils/token'
 
 interface PageLayoutProps {
   isModal?: boolean
   onClose?: () => void
 }
 const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
+  const { setUserData, setAuthed } = useCurrentUser()
+  const onLogout = () => {
+    removeAll()
+    setUserData(undefined)
+    setAuthed(false)
+  }
   return (
     <Container>
       <PageHeader>
@@ -25,7 +34,7 @@ const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
             Close
           </CloseButton>
         ) : (
-          <div>dropdown</div>
+          <Dropdown onLogout={onLogout} />
         )}
       </PageHeader>
       <Content>{children}</Content>

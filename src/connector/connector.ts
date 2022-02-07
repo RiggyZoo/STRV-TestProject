@@ -11,7 +11,7 @@ const request = async <T>(
       method,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${getToken()}`,
+        Authorization: getToken() || ' ',
         apikey:
           process.env.REACT_API_KEY ||
           'd3479d2a6807f069cf45b02378694036b602ce3e',
