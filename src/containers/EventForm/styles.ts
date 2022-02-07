@@ -8,3 +8,9 @@ export const FieldsContainer = styled.div`
   justify-content: space-between;
 `
 export const FieldContainer = styled.div``
+
+export const ConfirmButtonWrapper = styled.div`
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+`

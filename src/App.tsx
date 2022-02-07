@@ -11,19 +11,16 @@ function App() {
   const [localStoreHasJWT, setLocalStoreHasJWT] = useState<boolean>(
     Boolean(getToken()),
   )
-  const [auther, setAuther] = useState(false)
-  console.log(authed, 'authed from app')
 
   useEffect(() => {
     if (localStoreHasJWT) {
       setAuthed(true)
     }
-    console.log(authed, 'authed from app')
   }, [localStoreHasJWT])
 
   useEffect(() => {
     setLocalStoreHasJWT(Boolean(getUser()))
-    if (localStoreHasJWT) {
+    if (localStoreHasJWT && authed) {
       const user = JSON.parse(window.localStorage.getItem('user') || ' ')
       setUserData(user)
     }

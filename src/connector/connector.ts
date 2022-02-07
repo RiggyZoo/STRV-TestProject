@@ -5,17 +5,25 @@ import { getToken } from '../utils/token'
 const request = async <T>(
   path: string,
   { method, body }: RequestInit,
+  authorization: boolean = true,
 ): Promise<ReqResponse<T>> => {
   try {
     const response = await fetch(`${process.env.REACT_APP_ENDPOINT}/${path}`, {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: getToken() || ' ',
-        apikey:
-          process.env.REACT_API_KEY ||
-          'd3479d2a6807f069cf45b02378694036b602ce3e',
-      },
+      headers: authorization
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: getToken() || ' ',
+            apikey:
+              process.env.REACT_API_KEY ||
+              'd3479d2a6807f069cf45b02378694036b602ce3e',
+          }
+        : {
+            'Content-Type': 'application/json',
+            apikey:
+              process.env.REACT_API_KEY ||
+              'd3479d2a6807f069cf45b02378694036b602ce3e',
+          },
       body: body,
     })
 
@@ -23,14 +31,16 @@ const request = async <T>(
       response.headers.get('Content-Type')?.includes('application/json') &&
       (await response.json())
     const jwt = response.headers.get('Authorization')
-    const refresJwt = response.headers.get('Refresh-Token')
+    const refreshJwt = response.headers.get('Refresh-Token')
+
+    //TODO:refsresh token
 
     return {
       status: response.status,
       ok: response.ok,
       data,
       jwt: jwt,
-      refreshJwt: refresJwt,
+      refreshJwt: refreshJwt,
     }
   } catch (error) {
     return {
@@ -45,7 +55,11 @@ export const connector = {
   get: async <TResponse>(path: string) => {
     return await request<TResponse>(path, { method: 'GET' })
   },
-  post: async <TResponse, TBody>(path: string, payload: TBody) => {
+  post: async <TResponse, TBody>(
+    path: string,
+    payload: TBody,
+    Authorization: boolean = true,
+  ) => {
     return await request<TResponse>(path, {
       method: 'POST',
       body: JSON.stringify(payload),

@@ -47,7 +47,7 @@ interface Event {
   attendees: Owner[]
 }
 const EventDetail = () => {
-  const [isMyEvent, setIsMyEvent] = useState(false)
+  const [isMyEvent, setIsMyEvent] = useState(() => false)
   const [event, setEvent] = useState<Event>()
   const [reset, setReset] = useState(false)
   const { userData } = useCurrentUser()
@@ -98,7 +98,7 @@ const EventDetail = () => {
             <EventFormContainer>
               <EventForm
                 eventID={event?.id}
-                onClose={() => {}}
+                onClose={() => history.push('/events/all')}
                 onReset={() => {}}
               />
             </EventFormContainer>
@@ -126,8 +126,9 @@ const EventDetail = () => {
           <Attendees>
             <AttendTitle>Attendees</AttendTitle>
             <AttendItemWrapper>
+              {isMyEvent && <AttendItem isMyEvent={true}>You</AttendItem>}
               {event?.attendees.map((item) => (
-                <AttendItem>
+                <AttendItem key={item._id} isMyEvent={false}>
                   {item.firstName} {item.lastName}
                 </AttendItem>
               ))}
@@ -135,9 +136,16 @@ const EventDetail = () => {
           </Attendees>
         </ContentWrapper>
       </PageLayout>
-      <div style={{ position: 'sticky', float: 'left', right: 0, bottom: 0 }}>
-        <CircleButton theme={CircleButtons.confirm} />
-      </div>
+      {/* <div
+        style={{
+          position: 'sticky',
+          float: 'right',
+          right: '2rem',
+          bottom: '2rem',
+        }}
+      >
+        <CircleButton type={'submit'} theme={CircleButtons.confirm} />
+      </div>*/}
     </>
   )
 }

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { colors } from '../../styles/themes'
 import Cursor from '../../assets/icons/Pointer.png'
 
@@ -22,8 +22,9 @@ export const EventDetailWrapper = styled.div`
 export const Attendees = styled.div`
   padding: 1.625rem 2rem;
   background-color: ${colors.white};
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.108696);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.108696);
   border-radius: 2px;
+  max-height: 18.5rem;
   flex: 1;
 `
 
@@ -31,18 +32,25 @@ export const AttendTitle = styled.span`
   font-size: 22px;
   line-height: 32px;
 `
-export const AttendItem = styled.div`
+export const AttendItem = styled.div<{ isMyEvent?: boolean }>`
   font-size: 13px;
   color: ${colors.greySecondary};
-  background-color: ${colors.grey};
+  background-color: ${({ isMyEvent }) =>
+    isMyEvent ? colors.white : colors.grey};
   padding: 0 1rem;
   line-height: 31px;
   border-radius: 100px;
   margin-right: 0.5rem;
   margin-bottom: 1rem;
+  ${({ isMyEvent }) =>
+    isMyEvent &&
+    css`
+      border: 2px solid ${colors.grey};
+    `}
 `
 export const AttendItemWrapper = styled.div`
   display: flex;
+  overflow: scroll;
   flex-flow: row wrap;
   justify-content: flex-start;
 `
