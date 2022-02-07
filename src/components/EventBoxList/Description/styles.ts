@@ -3,9 +3,9 @@ import { colors } from '../../../styles/themes'
 
 export const Container = styled.span`
   color: ${colors.greySecondary};
-  margin: 1.9rem 0;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
+  display: inline-block;
+  white-space: nowrap;
+  max-width: 100%;
+  text-overflow: ellipsis;
   overflow: hidden;
 `

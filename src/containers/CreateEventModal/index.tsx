@@ -15,9 +15,12 @@ import { Button } from '../../components/Button'
 import { Buttons, ButtonSize } from '../../components/Button/Button'
 import { DatePickerField } from '../DatePickerField'
 import { validationSchema } from './schema'
+import { useHistory, useLocation } from 'react-router-dom'
+import { createEvent } from '../../services/events'
 
 interface CreateModalProps {
   onClose: () => void
+  onReset: () => void
 }
 
 interface EventForm {
@@ -26,7 +29,10 @@ interface EventForm {
   startsAt: string
   capacity: number
 }
-const CreateEventModal: FC<CreateModalProps> = ({ onClose }) => {
+const CreateEventModal: FC<CreateModalProps> = ({ onClose, onReset }) => {
+  const history = useHistory()
+  const location = useLocation()
+
   const initValues = {
     capacity: '',
     title: '',
@@ -35,8 +41,27 @@ const CreateEventModal: FC<CreateModalProps> = ({ onClose }) => {
     time: '',
   }
 
-  const createEventHandler = (values: any, actions: FormikHelpers<any>) => {
-    console.log(values)
+  const createEventHandler = async (
+    values: any,
+    actions: FormikHelpers<any>,
+  ) => {
+    const hours = values.time.getHours()
+    const minutes = values.time.getMinutes()
+    const seconds = values.time.getSeconds()
+    const correctTimeAndDate = values.startsAt.setHours(hours, minutes, seconds)
+
+    delete values.time
+
+    const { status } = await createEvent({
+      ...values,
+      startsAt: new Date(correctTimeAndDate),
+    })
+    console.log(status)
+    if (status === 201) {
+      console.log(1)
+      onClose()
+      onReset()
+    }
   }
 
   //TODO: Separate form from this file

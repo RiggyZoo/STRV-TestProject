@@ -9,6 +9,7 @@ interface IButtonProps {
 export const DefaultButton = styled.button<IButtonProps>`
   font-size: 1rem;
   position: relative;
+  min-width: 100px;
   padding: ${({ size }) => size};
   line-height: 2rem;
   cursor: url(${Cursor}), pointer;

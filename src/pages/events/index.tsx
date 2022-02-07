@@ -13,6 +13,7 @@ import { CircleButtons } from '../../components/CircleButton/CircleButton'
 import StickyButtonContainer from '../../containers/StickyButtonContainer'
 import PageLayout from '../../containers/PageLayout'
 import CreateEventModal from '../../containers/CreateEventModal'
+import { EventBoxList } from '../../components/EventBoxList'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -25,7 +26,7 @@ const EventsPage = () => {
   const [isModal, setIsModal] = useState(false)
   const [reset, setReset] = useState(false)
   const [event, setEvents] = useState<[]>()
-  const { userData } = useCurrentUser()
+  const { userData, viewMode } = useCurrentUser()
   const user = localStorage.getItem('user')
   const los = JSON.parse(user ? user : ' ')
 
@@ -91,7 +92,12 @@ const EventsPage = () => {
     const isPast = new Date(event.startsAt) < new Date()
     if (isMyEvent) {
       return isPast ? null : (
-        <Button theme={Buttons.grey} size={ButtonSize.small} loading={false}>
+        <Button
+          theme={Buttons.grey}
+          size={ButtonSize.small}
+          loading={false}
+          style={{ justifySelf: 'end' }}
+        >
           edit
         </Button>
       )
@@ -102,6 +108,7 @@ const EventsPage = () => {
           theme={Buttons.red}
           size={ButtonSize.small}
           loading={false}
+          style={{ justifySelf: 'end' }}
           onClick={() => unattendToEvent(event._id)}
         >
           Leave
@@ -113,6 +120,7 @@ const EventsPage = () => {
           theme={Buttons.default}
           size={ButtonSize.small}
           loading={false}
+          style={{ justifySelf: 'end' }}
           onClick={() => attendToEvent(event._id)}
         >
           join
@@ -123,30 +131,53 @@ const EventsPage = () => {
 
   return (
     <>
-      {isModal && <CreateEventModal onClose={() => setIsModal(false)} />}
+      {isModal && (
+        <CreateEventModal
+          onClose={() => setIsModal(false)}
+          onReset={() => setReset(!reset)}
+        />
+      )}
       {!isModal && (
         <PageLayout>
           <EventsFilter filterType={filter} />
-          <Container>
+          <Container mode={viewMode}>
             {event &&
-              event.map((item: any) => (
-                <EventBox key={item._id}>
-                  <EventBox.Date date={item.startsAt} />
-                  <EventBox.Name>{item.title}</EventBox.Name>
-                  <EventBox.Owner>
-                    {item.owner.firstName} {item.owner.lastName}
-                  </EventBox.Owner>
-                  <EventBox.Description>
-                    {item.description}
-                  </EventBox.Description>
-                  <EventBox.Capacity
-                    attendees={item.attendees.length}
-                    capacity={item.capacity}
-                  >
+              event.map((item: any) =>
+                viewMode === 'list' ? (
+                  <EventBoxList key={item._id}>
+                    <EventBoxList.Name>{item.title}</EventBoxList.Name>
+                    <EventBoxList.Description>
+                      {item.description}
+                    </EventBoxList.Description>
+                    <EventBoxList.Owner>
+                      {item.owner.firstName} {item.owner.lastName}
+                    </EventBoxList.Owner>
+                    <EventBoxList.Date date={item.startsAt} />
+                    <EventBoxList.Capacity
+                      attendees={item.attendees.length}
+                      capacity={item.capacity}
+                    />
                     {defineButton(item)}
-                  </EventBox.Capacity>
-                </EventBox>
-              ))}
+                  </EventBoxList>
+                ) : (
+                  <EventBox key={item._id}>
+                    <EventBox.Date date={item.startsAt} />
+                    <EventBox.Name>{item.title}</EventBox.Name>
+                    <EventBox.Owner>
+                      {item.owner.firstName} {item.owner.lastName}
+                    </EventBox.Owner>
+                    <EventBox.Description>
+                      {item.description}
+                    </EventBox.Description>
+                    <EventBox.Capacity
+                      attendees={item.attendees.length}
+                      capacity={item.capacity}
+                    >
+                      {defineButton(item)}
+                    </EventBox.Capacity>
+                  </EventBox>
+                ),
+              )}
           </Container>
         </PageLayout>
       )}

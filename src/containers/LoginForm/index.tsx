@@ -44,7 +44,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
       setAuthed(true)
       setToken(jwt)
       window.localStorage.setItem('user', JSON.stringify(data))
-      history.push('/events')
+      history.push('/events/all')
 
       /*  window.location.reload()*/
     }
