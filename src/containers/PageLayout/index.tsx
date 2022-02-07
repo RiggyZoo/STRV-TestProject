@@ -18,7 +18,8 @@ interface PageLayoutProps {
   onClose?: () => void
 }
 const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
-  const { setUserData, setAuthed } = useCurrentUser()
+  const { userData, setUserData, setAuthed } = useCurrentUser()
+  console.log(userData, 'userdata')
   const onLogout = () => {
     removeAll()
     setUserData(undefined)
@@ -34,7 +35,11 @@ const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
             Close
           </CloseButton>
         ) : (
-          <Dropdown onLogout={onLogout} />
+          <Dropdown
+            onLogout={onLogout}
+            firstName={userData?.firstName}
+            lastName={userData?.lastName}
+          />
         )}
       </PageHeader>
       <Content>{children}</Content>

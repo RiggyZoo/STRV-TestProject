@@ -40,10 +40,11 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
     const { data, jwt, status } = await login(values)
     console.log(data, 'daraa')
     if (data && status === 200) {
-      setUserData(data)
       setAuthed(true)
       setToken(jwt)
       window.localStorage.setItem('user', JSON.stringify(data))
+      const user = JSON.parse(window.localStorage.getItem('user') || ' ')
+      setUserData(user)
       history.push('/events/all')
 
       /*  window.location.reload()*/

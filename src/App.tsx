@@ -22,6 +22,8 @@ function App() {
   }, [localStoreHasJWT])
 
   useEffect(() => {
+    const user = JSON.parse(window.localStorage.getItem('user') || ' ')
+    setUserData(user)
     setLocalStoreHasJWT(Boolean(getUser()))
   }, [authed])
 

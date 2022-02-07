@@ -6,17 +6,23 @@ import {
   SvgElement,
   DropdownMenuContainer,
 } from './styles'
-import DropdownIcon from './dropdown.svg'
+import DropdownIcon from '../../assets/icons/dropdown.svg'
 
 interface DropdownProps {
   onLogout: () => void
+  firstName?: string
+  lastName?: string
 }
-const Dropdown = ({ onLogout }: DropdownProps) => {
+const Dropdown = ({ onLogout, firstName, lastName }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
+
   return (
     <Container onClick={() => setIsOpen(!isOpen)}>
-      <Avatar>FN</Avatar>
-      <Name>Nikita Filiaiushkin</Name>
+      <Avatar>
+        {firstName?.[0]}
+        {lastName?.[0]}
+      </Avatar>
+      <Name>{`${firstName} ${lastName}`}</Name>
       <SvgElement src={DropdownIcon} alt="icon" />
 
       {isOpen && (
