@@ -55,9 +55,6 @@ const request = async <T>(
           },
           false,
         )
-        if (jwt) {
-          request()
-        }
       }
 
       refreshToken()
