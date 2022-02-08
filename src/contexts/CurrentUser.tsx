@@ -48,9 +48,14 @@ export const UserManager: React.FC = ({ children }) => {
     }
   }
   useEffect(() => {
-    console.log(1)
     getModeFromStorage()
   }, [viewMode])
+
+  useEffect(() => {
+    if (userData) {
+      setUserData(JSON.parse(localStorage.getItem('user') || ''))
+    }
+  }, [])
 
   const contextValue: ContextProps = {
     userData,

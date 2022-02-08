@@ -57,6 +57,7 @@ const EventDetail = () => {
   const isBreakPoint = useMediaQuery(768)
   const { id } = useParams<Params>()
 
+  console.log(isBreakPoint, 'isBreakPoint')
   const onReset = () => {
     setReset((reset) => !reset)
   }
@@ -69,6 +70,8 @@ const EventDetail = () => {
         history.push('/404')
       }
 
+      console.log(userData, 'dataa')
+      debugger
       if (userData?._id === data.owner._id) {
         setIsMyEvent(true)
         setEvent(data)
@@ -83,7 +86,7 @@ const EventDetail = () => {
     const response = await deleteEvent(id)
     history.push('/events/all')
   }
-
+  console.log(isMyEvent, 'isMyEvent')
   return (
     <PageLayout isDetail={!isMyEvent}>
       <ContentHeader>
@@ -131,7 +134,7 @@ const EventDetail = () => {
             </EventBox>
           </EventDetailWrapper>
         )}
-        {isBreakPoint && (
+        {
           <Attendees>
             <AttendTitle>Attendees</AttendTitle>
             <AttendItemWrapper>
@@ -143,7 +146,7 @@ const EventDetail = () => {
               ))}
             </AttendItemWrapper>
           </Attendees>
-        )}
+        }
       </ContentWrapper>
     </PageLayout>
   )

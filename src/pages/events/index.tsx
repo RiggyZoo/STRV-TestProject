@@ -16,6 +16,7 @@ import { defineButton } from '../../helpers/defineButton'
 import CircleButtonLayout from '../../containers/CircleButtonLayout'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { breakPoints } from '../../styles/themes'
+import { Loader } from '../../components/Loader'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -31,6 +32,7 @@ const EventsPage = () => {
   const [event, setEvents] = useState<[]>()
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingPage, setIsLoadingPage] = useState(false)
   const { userData, viewMode } = useCurrentUser()
   const user = localStorage.getItem('user')
   const los = JSON.parse(user ? user : ' ')
@@ -41,6 +43,9 @@ const EventsPage = () => {
   }
 
   useEffect(() => {
+    setIsLoading(true)
+    setIsLoadingPage(true)
+
     switch (filter) {
       case 'all':
         allEvents()
@@ -66,6 +71,7 @@ const EventsPage = () => {
 
     if (status === 200) {
       setIsLoading(false)
+      setIsLoadingPage(false)
     }
     setEvents(data)
   }
@@ -77,6 +83,7 @@ const EventsPage = () => {
     )
     if (status === 200) {
       setIsLoading(false)
+      setIsLoadingPage(false)
     }
     setEvents(futureEvents)
   }
@@ -89,7 +96,9 @@ const EventsPage = () => {
 
     if (status === 200) {
       setIsLoading(false)
+      setIsLoadingPage(false)
     }
+
     setEvents(futureEvents)
   }
 
@@ -112,8 +121,8 @@ const EventsPage = () => {
         <PageLayout>
           <EventsFilter filterType={filter} />
           <Container mode={viewMode}>
-            {event &&
-              event.map((item: any) =>
+            {!isLoadingPage &&
+              event?.map((item: any) =>
                 viewMode === 'list' ? (
                   <EventBoxList
                     key={item._id}
@@ -159,7 +168,6 @@ const EventsPage = () => {
                       attendees={item.attendees.length}
                       capacity={item.capacity}
                     >
-                      a
                       {defineButton(
                         los,
                         item,
@@ -180,6 +188,7 @@ const EventsPage = () => {
           <CircleButton theme="default" onClick={() => setIsModal(true)} />
         </CircleButtonLayout>
       )}
+      {isLoadingPage && <Loader top="50%" right="50%" size="onPage" />}
     </>
   )
 }
