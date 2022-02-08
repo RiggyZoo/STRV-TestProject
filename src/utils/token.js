@@ -9,3 +9,9 @@ export const setToken = (jwt) => {
 export const removeAll = () => {
   localStorage.clear()
 }
+export const getRefreshToken = () => {
+  return localStorage.getItem('refreshToken')
+}
+export const setRefreshToken = (jwt) => {
+  localStorage.setItem('refreshToken', jwt)
+}

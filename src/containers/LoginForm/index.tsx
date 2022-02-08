@@ -16,7 +16,7 @@ import { connector } from '../../connector/connector'
 import { login } from '../../services/login'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 import { setUser } from '../../helpers/currentUser'
-import { setToken } from '../../utils/token'
+import { setRefreshToken, setToken } from '../../utils/token'
 import { useHistory } from 'react-router-dom'
 
 interface LoginForm {
@@ -39,11 +39,13 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   ) => {
     actions.setSubmitting(true)
     setIsLoading(true)
-    const { data, jwt, status } = await login(values)
+    localStorage.clear()
+    const { data, jwt, status, refreshJwt } = await login(values)
 
     if (data && status === 200) {
       setAuthed(true)
       setToken(jwt)
+      setRefreshToken(refreshJwt)
 
       window.localStorage.setItem('user', JSON.stringify(data))
       const user = JSON.parse(window.localStorage.getItem('user') || ' ')

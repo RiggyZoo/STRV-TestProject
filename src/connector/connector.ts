@@ -1,6 +1,11 @@
 import { ReqResponse } from '../types/connector'
 import { getUser } from '../helpers/currentUser'
-import { getToken } from '../utils/token'
+import {
+  getRefreshToken,
+  getToken,
+  setRefreshToken,
+  setToken,
+} from '../utils/token'
 
 const request = async <T>(
   path: string,
@@ -33,7 +38,30 @@ const request = async <T>(
     const jwt = response.headers.get('Authorization')
     const refreshJwt = response.headers.get('Refresh-Token')
 
+    if (jwt) {
+      setToken(jwt)
+    }
+    if (refreshJwt) {
+      setRefreshToken(refreshJwt)
+    }
     //TODO:refsresh token
+
+    if (response.status === 403) {
+      const refreshToken = async () => {
+        const { jwt } = await connector.post(
+          'auth/native',
+          {
+            refreshToken: getRefreshToken(),
+          },
+          false,
+        )
+        if (jwt) {
+          request()
+        }
+      }
+
+      refreshToken()
+    }
 
     return {
       status: response.status,
@@ -58,12 +86,16 @@ export const connector = {
   post: async <TResponse, TBody>(
     path: string,
     payload: TBody,
-    Authorization: boolean = true,
+    authorization: boolean,
   ) => {
-    return await request<TResponse>(path, {
-      method: 'POST',
-      body: JSON.stringify(payload),
-    })
+    return await request<TResponse>(
+      path,
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      },
+      authorization,
+    )
   },
   patch: async <TResponse, TBody>(path: string, payload: TBody) => {
     return await request<TResponse>(path, {

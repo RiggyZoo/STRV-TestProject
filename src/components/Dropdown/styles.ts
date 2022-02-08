@@ -21,6 +21,7 @@ export const Name = styled.span`
   color: ${colors.greySecondary};
   line-height: 14px;
   font-size: 14px;
+  margin-left: 0.5rem;
 `
 export const SvgElement = styled.img`
   margin: 0 0.5rem;

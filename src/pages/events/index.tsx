@@ -39,7 +39,23 @@ const EventsPage = () => {
 
   console.log(isBreakPoint, 'point')
   const onReset = () => {
-    setReset(!reset)
+    switch (filter) {
+      case 'all':
+        allEvents()
+        break
+
+      case 'past':
+        fetchPastEvents()
+        break
+
+      case 'future':
+        fetchFutureEvents()
+        break
+
+      default: {
+        allEvents()
+      }
+    }
   }
 
   useEffect(() => {
