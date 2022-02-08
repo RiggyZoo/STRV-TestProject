@@ -1,6 +1,6 @@
 import React from 'react'
 import { Story } from '@storybook/react'
-import { CircleButton, CircleButtons, ICircleButtonProps } from './CircleButton'
+import { CircleButton, ICircleButtonProps } from './CircleButton'
 
 export default {
   title: 'Components/CircleButton',
@@ -13,5 +13,5 @@ const Template: Story<ICircleButtonProps> = (args) => <CircleButton {...args} />
 export const Default = Template.bind({})
 
 Default.args = {
-  theme: CircleButtons.confirm,
+  theme: 'default',
 }

@@ -17,4 +17,7 @@ export const Default = Template.bind({})
 Default.args = {
   isActive: true,
   mode: 'list',
+  onClick: () => {
+    alert('Click')
+  },
 }

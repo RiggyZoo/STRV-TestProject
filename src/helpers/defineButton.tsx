@@ -1,6 +1,5 @@
-import { Button } from '../components/Button'
-import { Buttons, ButtonSize } from '../components/Button/Button'
 import React from 'react'
+import { Button } from '../components/Button'
 import { unattendEvent, attendEvent } from '../services/events'
 
 export const defineButton = (
@@ -8,8 +7,11 @@ export const defineButton = (
   event: any,
   history: any,
   onReset: any,
+  loading: any,
+  setLoading?: any,
 ) => {
   const attendToEvent = async (event: any, id: string) => {
+    setLoading(id)
     event.stopPropagation()
     const { status } = await attendEvent(id)
     onReset()
@@ -17,10 +19,17 @@ export const defineButton = (
 
   //TODO: look into deletion method
   const unattendToEvent = async (event: any, id: string) => {
+    setLoading(id)
     event.stopPropagation()
     const responce = await unattendEvent(id)
     onReset()
   }
+
+  const pushToEditEvent = (event: any, id: any) => {
+    event.stopPropagation()
+    history.push(`${id}/detail`)
+  }
+
   const isAttended = event.attendees.filter(
     (item: any) => item?._id === user._id,
   ).length
@@ -29,22 +38,25 @@ export const defineButton = (
   if (isMyEvent) {
     return isPast ? null : (
       <Button
-        theme={Buttons.grey}
-        size={ButtonSize.small}
+        theme={'grey'}
+        size="small"
+        id={event.id}
+        key={event.id}
         loading={false}
-        onClick={() => history.push(`${event._id}/detail`)}
+        onClick={(click) => pushToEditEvent(click, event._id)}
         style={{ justifySelf: 'end' }}
       >
         edit
       </Button>
     )
   }
+
   if (!!isAttended) {
     return isPast ? null : (
       <Button
-        theme={Buttons.red}
-        size={ButtonSize.small}
-        loading={false}
+        theme="red"
+        size="small"
+        loading={event._id === loading}
         style={{ justifySelf: 'end' }}
         onClick={(click) => unattendToEvent(click, event._id)}
       >
@@ -54,9 +66,9 @@ export const defineButton = (
   } else {
     return isPast ? null : (
       <Button
-        theme={Buttons.default}
-        size={ButtonSize.small}
-        loading={false}
+        theme="green"
+        size="small"
+        loading={event._id === loading}
         style={{ justifySelf: 'end' }}
         onClick={(click) => attendToEvent(click, event._id)}
       >

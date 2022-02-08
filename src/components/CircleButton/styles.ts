@@ -7,7 +7,7 @@ export const StyledButton = styled.button`
   background-color: ${colors.inputValue};
   outline: none;
   line-height: 0;
-  padding: 1.3125rem;
+  padding: 1.5rem;
   border: none;
   cursor: url(${Cursor}), pointer;
   box-shadow: 0 6px 9px rgba(0, 0, 0, 0.15);
@@ -21,7 +21,7 @@ export const SvgElement = styled.img``
 
 export const ConfirmButton = styled(StyledButton)`
   background-color: ${colors.primary};
-
+  padding: 1.2rem;
   &:hover {
     background-color: ${colors.primaryHover};
   }

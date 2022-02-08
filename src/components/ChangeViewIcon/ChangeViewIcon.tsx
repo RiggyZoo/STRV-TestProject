@@ -1,7 +1,4 @@
 import React, { FC } from 'react'
-import GridIcon from './icon-grid.svg'
-import ListIcon from './icon-list.svg'
-import { SvgIcon } from './styles'
 import { colors } from '../../styles/themes'
 
 export interface IChangeViewIconProps {
@@ -15,7 +12,6 @@ export const ChangeViewIcon: FC<IChangeViewIconProps> = ({
   mode,
   onClick,
 }) => {
-  console.log(isActive, 'from aa')
   return (
     <div>
       {mode === 'grid' ? (
@@ -44,12 +40,12 @@ export const ChangeViewIcon: FC<IChangeViewIconProps> = ({
           onClick={onClick}
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M0 0H24V24H0V0Z"
             stroke="black"
-            stroke-opacity="0.01"
-            stroke-width="0"
+            strokeOpacity="0.01"
+            strokeWidth="0"
           />
           <path
             fillRule="evenodd"
@@ -59,13 +55,6 @@ export const ChangeViewIcon: FC<IChangeViewIconProps> = ({
           />
         </svg>
       )}
-
-      {/*<SvgIcon
-        src={mode === 'list' ? ListIcon : GridIcon}
-        alt=""
-        style={{ color: 'red' }}
-        isActive={isActive}
-      />*/}
     </div>
   )
 }

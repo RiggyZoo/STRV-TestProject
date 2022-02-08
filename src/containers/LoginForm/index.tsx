@@ -11,7 +11,7 @@ import {
 } from './styles'
 import { InputField } from '../InputContainer'
 import { Button } from '../../components/Button'
-import { Buttons, ButtonSize } from '../../components/Button/Button'
+
 import { connector } from '../../connector/connector'
 import { login } from '../../services/login'
 import { useCurrentUser } from '../../contexts/CurrentUser'
@@ -26,6 +26,7 @@ interface LoginForm {
 const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   const [isError, setIsError] = useState<boolean>(false)
   const { setAuthed, setUserData } = useCurrentUser()
+  const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
   const initValues = {
@@ -37,6 +38,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
     actions: FormikHelpers<LoginForm>,
   ) => {
     actions.setSubmitting(true)
+    setIsLoading(true)
     const { data, jwt, status } = await login(values)
 
     if (data && status === 200) {
@@ -54,6 +56,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
       actions.setErrors({ email: ' ', password: ' ' })
     }
     actions.setSubmitting(false)
+    setIsLoading(false)
   }
 
   return (
@@ -91,9 +94,9 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
             <div>
               <Button
                 type="submit"
-                theme={Buttons.default}
-                size={ButtonSize.main}
-                loading={false}
+                theme="green"
+                size="main"
+                loading={isLoading}
               >
                 Sign in
               </Button>

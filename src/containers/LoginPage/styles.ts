@@ -39,7 +39,7 @@ export const RightContent = styled.div`
 
 export const Title = styled.div`
   font-family: PlayfairDisplay-Regular, sans-serif;
-  color: #ffffff;
+  color: ${colors.white};
   font-size: 2rem;
   line-height: 1.15;
   text-align: center;

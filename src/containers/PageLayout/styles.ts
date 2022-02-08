@@ -37,3 +37,7 @@ export const CloseButton = styled.button`
 export const SvgElement = styled.img`
   margin-right: 0.5rem;
 `
+export const BackButton = styled.div`
+  align-self: center;
+  cursor: url(${Cursor}), pointer;
+`

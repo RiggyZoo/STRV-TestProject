@@ -16,7 +16,7 @@ import DartVader from '../../assets/img/icon.png'
 import LoginForm from '../LoginForm'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Button } from '../../components/Button'
-import { Buttons, ButtonSize } from '../../components/Button/Button'
+
 import { useHistory } from 'react-router-dom'
 
 interface ILoginPageProps {
@@ -61,8 +61,8 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
               </ErrorMessageSubTitle>
               <ButtonContainer>
                 <Button
-                  theme={Buttons.refresh}
-                  size={ButtonSize.main}
+                  theme="refresh"
+                  size="main"
                   loading={false}
                   onClick={() => history.push('/events/all')}
                 >

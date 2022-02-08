@@ -1,5 +1,5 @@
 import { FormikErrors } from 'formik'
-import styled, { css, keyframes } from 'styled-components'
+import styled, { css } from 'styled-components'
 import { colors } from '../../styles/themes'
 
 interface InputProps {

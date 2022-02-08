@@ -27,7 +27,6 @@ const pagesConfig: PagesConfig = {
 }
 
 const Routes: React.FC<Routes> = ({ localStoreHasJWT, authed }) => {
-  console.log(111)
   return (
     <Switch>
       {localStoreHasJWT ? (

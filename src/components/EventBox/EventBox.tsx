@@ -5,8 +5,6 @@ import Owner from './Owner'
 import Description from './Description'
 import Date from './Date'
 import Capacity from './Capacity'
-import { Button } from '../Button'
-import { Buttons, ButtonSize } from '../Button/Button'
 
 export interface IEventBoxProps {
   children: React.ReactNode

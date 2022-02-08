@@ -1,54 +1,46 @@
 import React, { FC } from 'react'
-import {
-  DefaultButton,
-  RedButton,
-  GreyButton,
-  GhostButton,
-  RefreshButton,
-} from './styles'
 import { StyledComponent } from 'styled-components'
 import { Loader } from '../Loader'
+import { DefaultButton, RedButton, GreyButton, RefreshButton } from './styles'
 
-interface IButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  theme: Buttons
-  size: ButtonSize
-  loading: boolean
+export interface IButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  theme: 'green' | 'red' | 'grey' | 'refresh'
+  size: 'main' | 'small'
+  loading: any
+  ref?: any
 }
 
-export enum Buttons {
-  default = 'default',
-  red = 'redButton',
-  grey = 'greyButton',
-  ghost = 'ghostButton',
-  refresh = 'refreshButton',
-}
-export enum ButtonSize {
-  main = '0.3rem 2.5rem',
-  small = '0.15rem 1.5rem',
-}
-
-export const Button: FC<IButtonProps> = ({
+const Button: FC<IButtonProps> = ({
   children,
-  theme,
-  onClick,
+  theme = 'green',
   loading,
-  size = ButtonSize.small,
+  ref,
+  size = 'small',
   ...rest
 }) => {
   const themes = {
-    default: DefaultButton,
-    redButton: RedButton,
-    greyButton: GreyButton,
-    ghostButton: GhostButton,
-    refreshButton: RefreshButton,
+    green: DefaultButton,
+    red: RedButton,
+    grey: GreyButton,
+    refresh: RefreshButton,
   }
 
   const Style: StyledComponent<'button', any, IButtonProps, any> =
     themes[theme || 'default']
 
   return (
-    <Style onClick={onClick} type="button" size={size} {...rest}>
-      {loading ? <Loader /> : <span>{children}</span>}
+    <Style ref={ref} type="button" size={size} loading={loading} {...rest}>
+      {loading && (
+        <Loader
+          top={size === 'main' ? '12%' : '10%'}
+          right="50%"
+          size={size === 'main' ? 'normal' : 'small'}
+        />
+      )}{' '}
+      <span>{children}</span>
     </Style>
   )
 }
+
+export { Button }

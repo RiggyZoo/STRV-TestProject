@@ -2,15 +2,13 @@ import React, { RefObject, useEffect, useRef, useState } from 'react'
 import { EventBox } from '../../components/EventBox'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 import { Button } from '../../components/Button'
-import { Buttons, ButtonSize } from '../../components/Button/Button'
+
 import { Container } from './styles'
 import { useHistory, useParams } from 'react-router-dom'
 import { EventsFilter } from '../../containers/EventsFilter'
 import { EventsFilterType } from '../../types/listOfRoutes'
 import { attendEvent, getAllEvents, unattendEvent } from '../../services/events'
 import { CircleButton } from '../../components/CircleButton'
-import { CircleButtons } from '../../components/CircleButton/CircleButton'
-import StickyButtonContainer from '../../containers/StickyButtonContainer'
 import PageLayout from '../../containers/PageLayout'
 import CreateEventModal from '../../containers/CreateEventModal'
 import { EventBoxList } from '../../components/EventBoxList'
@@ -32,6 +30,7 @@ const EventsPage = () => {
   const [reset, setReset] = useState(false)
   const [event, setEvents] = useState<[]>()
   const history = useHistory()
+  const [isLoading, setIsLoading] = useState(false)
   const { userData, viewMode } = useCurrentUser()
   const user = localStorage.getItem('user')
   const los = JSON.parse(user ? user : ' ')
@@ -62,27 +61,41 @@ const EventsPage = () => {
   }, [filter, reset])
 
   const allEvents = async () => {
-    const { data } = await getAllEvents()
+    const { data, status } = await getAllEvents()
     const events = data
 
+    if (status === 200) {
+      setIsLoading(false)
+    }
     setEvents(data)
   }
 
   const fetchFutureEvents = async () => {
-    const { data } = await getAllEvents()
+    const { data, status } = await getAllEvents()
     const futureEvents = data.filter(
       (item: any) => new Date(item.startsAt) > new Date(),
     )
+    if (status === 200) {
+      setIsLoading(false)
+    }
     setEvents(futureEvents)
   }
 
   const fetchPastEvents = async () => {
-    const { data } = await getAllEvents()
+    const { data, status } = await getAllEvents()
     const futureEvents = data.filter(
       (item: any) => new Date(item.startsAt) < new Date(),
     )
+
+    if (status === 200) {
+      setIsLoading(false)
+    }
     setEvents(futureEvents)
   }
+
+  useEffect(() => {
+    console.log(isLoading, 'isLoading')
+  }, [isLoading])
 
   const pushToDetail = (event: any, id: any) => {
     history.push(`/events/${id}/detail`)
@@ -120,7 +133,14 @@ const EventsPage = () => {
                       attendees={item.attendees.length}
                       capacity={item.capacity}
                     />
-                    {defineButton(los, item, history, onReset)}
+                    {defineButton(
+                      los,
+                      item,
+                      history,
+                      onReset,
+                      isLoading,
+                      setIsLoading,
+                    )}
                   </EventBoxList>
                 ) : (
                   <EventBox
@@ -139,7 +159,15 @@ const EventsPage = () => {
                       attendees={item.attendees.length}
                       capacity={item.capacity}
                     >
-                      {defineButton(los, item, history, onReset)}
+                      a
+                      {defineButton(
+                        los,
+                        item,
+                        history,
+                        onReset,
+                        isLoading,
+                        setIsLoading,
+                      )}
                     </EventBox.Capacity>
                   </EventBox>
                 ),
@@ -149,10 +177,7 @@ const EventsPage = () => {
       )}
       {!isModal && (
         <CircleButtonLayout>
-          <CircleButton
-            theme={CircleButtons.default}
-            onClick={() => setIsModal(true)}
-          />
+          <CircleButton theme="default" onClick={() => setIsModal(true)} />
         </CircleButtonLayout>
       )}
     </>

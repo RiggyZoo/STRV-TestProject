@@ -1,17 +1,15 @@
 import styled from 'styled-components'
-import { colors } from '../../styles/themes'
-import { ButtonSize } from './Button'
 import Cursor from '../../assets/icons/Pointer.png'
+import { colors } from '../../styles/themes'
+import { IButtonProps } from './Button'
 
-interface IButtonProps {
-  size: ButtonSize
-}
 export const DefaultButton = styled.button<IButtonProps>`
-  font-size: 1rem;
+  font-size: ${({ size }) => (size === 'small' ? '0.875rem' : '1rem')};
   position: relative;
-  min-width: 100px;
-  padding: ${({ size }) => size};
-  line-height: 2rem;
+  min-width: ${({ size }) => (size === 'small' ? '6.25rem' : '15rem')};
+  padding: ${({ size }) =>
+    size === 'small' ? '0.625rem 0 0.5rem 0' : '0.8125rem 0 0.75rem 0'};
+  line-height: ${({ size }) => (size === 'small' ? '0.875rem' : '2rem')};
   cursor: url(${Cursor}), pointer;
   text-transform: uppercase;
   border-radius: 4px;
@@ -22,6 +20,11 @@ export const DefaultButton = styled.button<IButtonProps>`
   color: ${colors.white};
   font-family: Hind-Regular, sans-serif;
   transition: all 0.2s;
+
+  & > span {
+    background-color: ${({ loading }) => loading && 'red'};
+    visibility: ${({ loading }) => loading && 'hidden'};
+  }
   &:hover {
     background: ${colors.primaryHover};
   }
@@ -38,10 +41,7 @@ export const GreyButton = styled(DefaultButton)`
     background: ${colors.greyHover};
   }
 `
-export const GhostButton = styled(DefaultButton)`
-  background: none;
-  color: #a9aeb4;
-`
+
 export const RefreshButton = styled(DefaultButton)`
   background: ${colors.inputValue};
   &:hover {

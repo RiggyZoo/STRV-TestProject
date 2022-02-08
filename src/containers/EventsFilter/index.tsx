@@ -2,8 +2,6 @@ import React, { FC } from 'react'
 import { Container, FilterContainer, ViewContainer } from './styles'
 import { LinkButton } from '../../components/LinkButton'
 import { useHistory, useParams } from 'react-router-dom'
-import { CircleButton } from '../../components/CircleButton'
-import { CircleButtons } from '../../components/CircleButton/CircleButton'
 import { ChangeViewIcon } from '../../components/ChangeViewIcon'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 

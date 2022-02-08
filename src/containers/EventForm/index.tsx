@@ -1,16 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { validationSchema } from './schema'
-import { FieldContainer, FieldsContainer, ConfirmButtonWrapper } from './styles'
+import { FieldContainer, FieldsContainer } from './styles'
 import { InputField } from '../InputContainer'
 import { DatePickerField } from '../DatePickerField'
 import { Button } from '../../components/Button'
-import { Buttons, ButtonSize } from '../../components/Button/Button'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { createEvent, getOneEvent, updateEvent } from '../../services/events'
 import { CircleButton } from '../../components/CircleButton'
-import { CircleButtons } from '../../components/CircleButton/CircleButton'
-import { useCurrentUser } from '../../contexts/CurrentUser'
 import CircleButtonLayout from '../CircleButtonLayout'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
@@ -46,7 +43,6 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
     values: any,
     actions: FormikHelpers<any>,
   ) => {
-    console.log(values, 'val')
     //TODO: Maybe use localstorage to save page when we were?
     if (JSON.stringify(initValues) === JSON.stringify(values)) {
       history.push('/events/all')
@@ -61,8 +57,6 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
     )
 
     delete values.time
-
-    console.log(values, '222')
 
     const { status } = eventID
       ? await updateEvent(
@@ -141,18 +135,13 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
             </FieldsContainer>
             {!eventID ? (
               <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                  type="submit"
-                  theme={Buttons.default}
-                  size={ButtonSize.main}
-                  loading={false}
-                >
+                <Button type="submit" theme="green" size="main" loading={false}>
                   create new event
                 </Button>
               </div>
             ) : (
               <CircleButtonLayout isMobile={!isBreakPoint}>
-                <CircleButton type="submit" theme={CircleButtons.confirm} />
+                <CircleButton type="submit" theme="confirm" />
               </CircleButtonLayout>
             )}
           </Form>

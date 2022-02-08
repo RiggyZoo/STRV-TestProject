@@ -1,17 +1,12 @@
 import React, { FC } from 'react'
-import { StyledButton, SvgElement, ConfirmButton } from './styles'
+import { StyledComponent } from 'styled-components'
 import PlusIcon from '../../assets/icons/plusIcon.svg'
 import SaveIcon from '../../assets/icons/icon-save.svg'
-import { StyledComponent } from 'styled-components'
+import { StyledButton, SvgElement, ConfirmButton } from './styles'
 
 export interface ICircleButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  theme: CircleButtons
-}
-
-export enum CircleButtons {
-  default = 'default',
-  confirm = 'confirm',
+  theme: 'default' | 'confirm'
 }
 
 const CircleButton: FC<ICircleButtonProps> = ({ theme, ...rest }) => {
@@ -25,10 +20,7 @@ const CircleButton: FC<ICircleButtonProps> = ({ theme, ...rest }) => {
 
   return (
     <Style {...rest}>
-      <SvgElement
-        src={theme === CircleButtons.confirm ? SaveIcon : PlusIcon}
-        alt="icon"
-      />
+      <SvgElement src={theme === 'confirm' ? SaveIcon : PlusIcon} alt="icon" />
     </Style>
   )
 }

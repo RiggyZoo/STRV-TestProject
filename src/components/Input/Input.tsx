@@ -15,7 +15,7 @@ export const Input: FC<InputProps> = forwardRef(
     if (rest.placeholder === undefined) {
       rest.placeholder = ' '
     }
-    console.log(disabled, 'disabled')
+
     return (
       <Container errors={Boolean(isTouched && error)}>
         <InputField
