@@ -12,6 +12,8 @@ import LeftContentSvg from '../../assets/icons/E..svg'
 import { Dropdown } from '../../components/Dropdown'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 import { removeAll } from '../../utils/token'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { breakPoints } from '../../styles/themes'
 
 interface PageLayoutProps {
   isModal?: boolean
@@ -19,6 +21,7 @@ interface PageLayoutProps {
 }
 const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
   const { userData, setUserData, setAuthed } = useCurrentUser()
+  const isBreakPoint = useMediaQuery(breakPoints.small)
 
   const onLogout = () => {
     removeAll()
@@ -32,7 +35,7 @@ const PageLayout: FC<PageLayoutProps> = ({ children, isModal, onClose }) => {
         {isModal ? (
           <CloseButton onClick={onClose}>
             <SvgElement src={CloseIcon} alt="icon" />
-            Close
+            {isBreakPoint ? 'Close' : null}
           </CloseButton>
         ) : (
           <Dropdown

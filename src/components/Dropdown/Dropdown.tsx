@@ -7,6 +7,7 @@ import {
   DropdownMenuContainer,
 } from './styles'
 import DropdownIcon from '../../assets/icons/dropdown.svg'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 interface DropdownProps {
   onLogout: () => void
@@ -15,14 +16,15 @@ interface DropdownProps {
 }
 const Dropdown = ({ onLogout, firstName, lastName }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
+  const isBreakPoint = useMediaQuery(768)
   return (
     <Container onClick={() => setIsOpen(!isOpen)}>
       <Avatar>
         {firstName?.[0]}
         {lastName?.[0]}
       </Avatar>
-      <Name>{`${firstName} ${lastName}`}</Name>
+
+      {isBreakPoint && <Name>{`${firstName} ${lastName}`}</Name>}
       <SvgElement src={DropdownIcon} alt="icon" />
 
       {isOpen && (

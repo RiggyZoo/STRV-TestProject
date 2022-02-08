@@ -21,13 +21,14 @@ export const Name = styled.span`
   color: ${colors.greySecondary};
   line-height: 14px;
   font-size: 14px;
+`
+export const SvgElement = styled.img`
   margin: 0 0.5rem;
 `
-export const SvgElement = styled.img``
 
 export const DropdownMenuContainer = styled.ul`
   position: absolute;
-
+  z-index: 1;
   top: 3.5rem;
   list-style: none;
   width: 110%;

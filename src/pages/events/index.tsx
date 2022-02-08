@@ -15,6 +15,9 @@ import PageLayout from '../../containers/PageLayout'
 import CreateEventModal from '../../containers/CreateEventModal'
 import { EventBoxList } from '../../components/EventBoxList'
 import { defineButton } from '../../helpers/defineButton'
+import CircleButtonLayout from '../../containers/CircleButtonLayout'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
+import { breakPoints } from '../../styles/themes'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -23,6 +26,7 @@ interface Params {
 }
 const EventsPage = () => {
   const ref = useRef<RefObject<HTMLDivElement>>()
+  const isBreakPoint = useMediaQuery(768)
   const { filter } = useParams<Params>()
   const [isModal, setIsModal] = useState(false)
   const [reset, setReset] = useState(false)
@@ -32,6 +36,7 @@ const EventsPage = () => {
   const user = localStorage.getItem('user')
   const los = JSON.parse(user ? user : ' ')
 
+  console.log(isBreakPoint, 'point')
   const onReset = () => {
     setReset(!reset)
   }
@@ -105,9 +110,11 @@ const EventsPage = () => {
                     <EventBoxList.Description>
                       {item.description}
                     </EventBoxList.Description>
-                    <EventBoxList.Owner>
-                      {item.owner.firstName} {item.owner.lastName}
-                    </EventBoxList.Owner>
+                    {isBreakPoint && (
+                      <EventBoxList.Owner>
+                        {item.owner.firstName} {item.owner.lastName}
+                      </EventBoxList.Owner>
+                    )}
                     <EventBoxList.Date date={item.startsAt} />
                     <EventBoxList.Capacity
                       attendees={item.attendees.length}
@@ -141,12 +148,12 @@ const EventsPage = () => {
         </PageLayout>
       )}
       {!isModal && (
-        <StickyButtonContainer>
+        <CircleButtonLayout>
           <CircleButton
             theme={CircleButtons.default}
             onClick={() => setIsModal(true)}
           />
-        </StickyButtonContainer>
+        </CircleButtonLayout>
       )}
     </>
   )

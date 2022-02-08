@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { colors } from '../../styles/themes'
+import { breakPoints, colors } from '../../styles/themes'
 import Cursor from '../../assets/icons/Pointer.png'
 
 export const EventDetailTitle = styled.div`
@@ -13,7 +13,11 @@ export const EventDetailTitle = styled.div`
 
 export const ContentWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 1rem;
+  @media (min-width: ${breakPoints.small}) {
+    flex-direction: row;
+  }
 `
 export const EventDetailWrapper = styled.div`
   flex: 3;
@@ -85,5 +89,6 @@ export const SvgElement = styled.img`
 `
 export const ContentHeader = styled.div`
   display: flex;
+  align-items: start;
   justify-content: space-between;
 `

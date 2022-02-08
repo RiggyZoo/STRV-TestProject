@@ -6,6 +6,7 @@ export const StyledButton = styled.button`
   border-radius: 50%;
   background-color: ${colors.inputValue};
   outline: none;
+  line-height: 0;
   padding: 1.3125rem;
   border: none;
   cursor: url(${Cursor}), pointer;

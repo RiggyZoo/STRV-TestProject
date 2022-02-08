@@ -22,6 +22,7 @@ import { EventForm } from '../../containers/EventForm'
 import TrashIcon from '../../assets/icons/trashIcon.svg'
 import { CircleButton } from '../../components/CircleButton'
 import { CircleButtons } from '../../components/CircleButton/CircleButton'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 interface Params {
   id: string
@@ -52,6 +53,7 @@ const EventDetail = () => {
   const [reset, setReset] = useState(false)
   const { userData } = useCurrentUser()
   const history = useHistory()
+  const isBreakPoint = useMediaQuery(768)
   const { id } = useParams<Params>()
 
   const onReset = () => {
@@ -88,7 +90,7 @@ const EventDetail = () => {
           {isMyEvent && (
             <DeleteButton onClick={() => onDeleteEvent(event?.id)}>
               <SvgElement src={TrashIcon} alt="icon" />
-              Delete event
+              {isBreakPoint && 'Delete event'}
             </DeleteButton>
           )}
         </ContentHeader>
@@ -122,18 +124,19 @@ const EventDetail = () => {
               </EventBox>
             </EventDetailWrapper>
           )}
-
-          <Attendees>
-            <AttendTitle>Attendees</AttendTitle>
-            <AttendItemWrapper>
-              {isMyEvent && <AttendItem isMyEvent={true}>You</AttendItem>}
-              {event?.attendees.map((item) => (
-                <AttendItem key={item._id} isMyEvent={false}>
-                  {item.firstName} {item.lastName}
-                </AttendItem>
-              ))}
-            </AttendItemWrapper>
-          </Attendees>
+          {isBreakPoint && isMyEvent && (
+            <Attendees>
+              <AttendTitle>Attendees</AttendTitle>
+              <AttendItemWrapper>
+                {isMyEvent && <AttendItem isMyEvent={true}>You</AttendItem>}
+                {event?.attendees.map((item) => (
+                  <AttendItem key={item._id} isMyEvent={false}>
+                    {item.firstName} {item.lastName}
+                  </AttendItem>
+                ))}
+              </AttendItemWrapper>
+            </Attendees>
+          )}
         </ContentWrapper>
       </PageLayout>
       {/* <div

@@ -21,7 +21,6 @@ const CreateEventModal: FC<CreateModalProps> = ({ onClose, onReset }) => {
   return (
     <PageLayout isModal={true} onClose={onClose}>
       <ModalWrapper>
-        {' '}
         <Container>
           <Title>Create new event</Title>
           <SubTitle>Enter details below.</SubTitle>

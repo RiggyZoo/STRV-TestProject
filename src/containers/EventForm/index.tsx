@@ -11,6 +11,8 @@ import { createEvent, getOneEvent, updateEvent } from '../../services/events'
 import { CircleButton } from '../../components/CircleButton'
 import { CircleButtons } from '../../components/CircleButton/CircleButton'
 import { useCurrentUser } from '../../contexts/CurrentUser'
+import CircleButtonLayout from '../CircleButtonLayout'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 interface EventFormProps {
   onClose: () => void
@@ -20,6 +22,7 @@ interface EventFormProps {
 const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
   const history = useHistory()
   const [event, setEvent] = useState<any>()
+  const isBreakPoint = useMediaQuery(768)
 
   useEffect(() => {
     if (!eventID) return
@@ -148,9 +151,9 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
                 </Button>
               </div>
             ) : (
-              <ConfirmButtonWrapper>
+              <CircleButtonLayout isMobile={!isBreakPoint}>
                 <CircleButton type="submit" theme={CircleButtons.confirm} />
-              </ConfirmButtonWrapper>
+              </CircleButtonLayout>
             )}
           </Form>
         )}

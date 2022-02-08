@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 
-export const useMediaQuery = (width: number) => {
+export const useMediaQuery = (width: number | string) => {
   if (
     typeof window === 'undefined' ||
     typeof window.matchMedia === 'undefined'

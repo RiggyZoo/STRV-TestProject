@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { colors } from '../../styles/themes'
+import { breakPoints, colors } from '../../styles/themes'
 import exp from 'constants'
 
 export const ModalWrapper = styled.div`
@@ -11,11 +11,14 @@ export const Container = styled.div`
   background: ${colors.white};
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.108696);
+  background: ${colors.white};
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.108696);
   border-radius: 2px;
   padding: 2.5rem 2rem;
-  min-width: 30rem;
+  width: 100%;
+  @media (min-width: ${breakPoints.small}) {
+    max-width: 30rem;
+  }
 `
 
 export const Title = styled.span`

@@ -22,10 +22,6 @@ export const colors = {
   navbar: 'rgba(76, 16, 112, 0.7)',
 }
 
-export const shadows = {
-  hover: '0px 15px 25px -5px rgba(darken(black, 40%))',
-  active: '0px 15px 25px -5px rgba(darken(black, 40%))',
+export const breakPoints = {
+  small: '48em',
 }
-
-export type Color = keyof typeof colors
-export type Shadows = keyof typeof shadows
