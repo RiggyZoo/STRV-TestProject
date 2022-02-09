@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PageLayout from '../../containers/PageLayout'
 import { useHistory, useParams } from 'react-router-dom'
-import { deleteEvent, getOneEvent } from '../../services/events'
 import { useCurrentUser } from '../../contexts/CurrentUser'
 import {
   Attendees,
@@ -23,6 +22,9 @@ import TrashIcon from '../../assets/icons/trashIcon.svg'
 
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Loader } from '../../components/Loader'
+import api from '../../api'
+import { AxiosResponse } from 'axios'
+import { getUserInfo } from '../../utils/token'
 
 interface Params {
   id: string
@@ -52,7 +54,7 @@ const EventDetail = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [event, setEvent] = useState<Event>()
   const [reset, setReset] = useState(false)
-  const { userData } = useCurrentUser()
+  const userData = getUserInfo()
   const history = useHistory()
   const isBreakPoint = useMediaQuery(768)
   const { id } = useParams<Params>()
@@ -62,31 +64,39 @@ const EventDetail = () => {
     setReset((reset) => !reset)
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, status } = await getOneEvent(id)
-
-      if (status === 400) {
+  const fetchOneEvent = async () => {
+    try {
+      setIsLoading(true)
+      await api.getOneEvent(id).then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          if (result.data.owner._id === userData?._id) {
+            setIsMyEvent(true)
+          }
+          setEvent(result.data)
+          setIsLoading(false)
+        }
+      })
+    } catch (e: any) {
+      if (e.response?.status === 400) {
         history.push('/404')
       }
-
-      console.log(userData, 'dataa')
-      debugger
-      if (userData?._id === data.owner._id) {
-        setIsMyEvent(true)
-        setEvent(data)
-      }
-      setEvent(data)
-      setIsLoading(false)
     }
-    fetchData()
+  }
+
+  useEffect(() => {
+    fetchOneEvent()
   }, [id, reset])
 
   const onDeleteEvent = async (id: any) => {
-    const response = await deleteEvent(id)
-    history.push('/events/all')
+    try {
+      await api.deleteEvent(id).then((result: AxiosResponse) => {
+        if (result.status === 204) {
+          history.push('/events/all')
+        }
+      })
+    } catch (e) {}
   }
-  console.log(isMyEvent, 'isMyEvent')
+
   return (
     <PageLayout isDetail={!isMyEvent}>
       <ContentHeader>

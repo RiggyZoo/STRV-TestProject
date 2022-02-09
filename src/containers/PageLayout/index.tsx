@@ -34,15 +34,23 @@ const PageLayout: FC<PageLayoutProps> = ({
 
   const onLogout = () => {
     removeAll()
-    setUserData(undefined)
     setAuthed(false)
+  }
+
+  const goToPrevPage = () => {
+    const prevPage = localStorage.getItem('events')
+    if (prevPage) {
+      history.push(`/events/${prevPage}`)
+    } else {
+      history.push('/events/all')
+    }
   }
   return (
     <Container>
       <PageHeader>
         <LeftContent src={LeftContentSvg} />
         {isDetail && (
-          <BackButton onClick={() => history.push('/events/all')}>
+          <BackButton onClick={() => goToPrevPage()}>
             <SvgElement src={BackIcon} />
             Back to events
           </BackButton>

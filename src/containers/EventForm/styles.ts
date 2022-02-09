@@ -7,7 +7,6 @@ export const FieldsContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `
-export const FieldContainer = styled.div``
 
 export const ConfirmButtonWrapper = styled.div`
   position: fixed;

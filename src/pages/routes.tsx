@@ -1,5 +1,13 @@
-import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {
+  Switch,
+  Route,
+  Redirect,
+  useRouteMatch,
+  useHistory,
+  generatePath,
+  useLocation,
+} from 'react-router-dom'
 import { ListOfRoutes } from '../types/listOfRoutes'
 import { EventsPage } from './events'
 import LoginPage from '../containers/LoginPage'
@@ -33,14 +41,20 @@ const Routes: React.FC<Routes> = ({ localStoreHasJWT, authed }) => {
         authed ? (
           <Route
             exact
-            path="/login"
-            render={() => <Redirect to={pagesConfig.list.defaultRoute} />}
+            path="/"
+            render={() => (
+              <Redirect
+                to={generatePath(ListOfRoutes.events, {
+                  filter: 'all',
+                })}
+              />
+            )}
           />
         ) : (
           <span>Loading...</span>
         )
       ) : (
-        <Route exact path="/login" render={() => <LoginPage />} />
+        <Route exact path="/" render={() => <LoginPage />} />
       )}
       <PrivateRoute
         component={pagesConfig.list.pages}
@@ -48,7 +62,7 @@ const Routes: React.FC<Routes> = ({ localStoreHasJWT, authed }) => {
         authed={authed}
       />
 
-      <Route path="/*" render={() => <ErrorPage />} />
+      <Route exact path="/*" render={() => <ErrorPage />} />
     </Switch>
   )
 }

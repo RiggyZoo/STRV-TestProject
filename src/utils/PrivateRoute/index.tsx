@@ -12,8 +12,6 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
   authed,
   localStoreHasJWT,
 }) => {
-  console.log(localStoreHasJWT, 'storage from privater route')
-  console.log(authed, 'authed from privater route')
   return (
     <Route
       render={(props) =>
@@ -26,7 +24,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
         ) : (
           <Redirect
             to={{
-              pathname: '/login',
+              pathname: '/',
               state: { from: props.location.pathname },
             }}
           />

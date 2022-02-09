@@ -1,13 +1,10 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react'
+import { AxiosResponse } from 'axios'
+import { useHistory, useParams } from 'react-router-dom'
 import { EventBox } from '../../components/EventBox'
 import { useCurrentUser } from '../../contexts/CurrentUser'
-import { Button } from '../../components/Button'
-
-import { Container } from './styles'
-import { useHistory, useParams } from 'react-router-dom'
 import { EventsFilter } from '../../containers/EventsFilter'
 import { EventsFilterType } from '../../types/listOfRoutes'
-import { attendEvent, getAllEvents, unattendEvent } from '../../services/events'
 import { CircleButton } from '../../components/CircleButton'
 import PageLayout from '../../containers/PageLayout'
 import CreateEventModal from '../../containers/CreateEventModal'
@@ -15,8 +12,9 @@ import { EventBoxList } from '../../components/EventBoxList'
 import { defineButton } from '../../helpers/defineButton'
 import CircleButtonLayout from '../../containers/CircleButtonLayout'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
-import { breakPoints } from '../../styles/themes'
 import { Loader } from '../../components/Loader'
+import api from '../../api'
+import { Container } from './styles'
 
 type FilterType = keyof typeof EventsFilterType
 
@@ -24,7 +22,6 @@ interface Params {
   filter: FilterType
 }
 const EventsPage = () => {
-  const ref = useRef<RefObject<HTMLDivElement>>()
   const isBreakPoint = useMediaQuery(768)
   const { filter } = useParams<Params>()
   const [isModal, setIsModal] = useState(false)
@@ -34,10 +31,7 @@ const EventsPage = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingPage, setIsLoadingPage] = useState(false)
   const { userData, viewMode } = useCurrentUser()
-  const user = localStorage.getItem('user')
-  const los = JSON.parse(user ? user : ' ')
 
-  console.log(isBreakPoint, 'point')
   const onReset = () => {
     switch (filter) {
       case 'all':
@@ -82,49 +76,59 @@ const EventsPage = () => {
   }, [filter, reset])
 
   const allEvents = async () => {
-    const { data, status } = await getAllEvents()
-    const events = data
-
-    if (status === 200) {
-      setIsLoading(false)
-      setIsLoadingPage(false)
+    try {
+      await api.getAllEvents().then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          setIsLoading(false)
+          setIsLoadingPage(false)
+          setEvents(result.data)
+        }
+      })
+    } catch (e: any) {
+      if (e.response?.status === 500) {
+        history.push('/404')
+      }
     }
-    setEvents(data)
   }
 
   const fetchFutureEvents = async () => {
-    const { data, status } = await getAllEvents()
-    const futureEvents = data.filter(
-      (item: any) => new Date(item.startsAt) > new Date(),
-    )
-    if (status === 200) {
-      setIsLoading(false)
-      setIsLoadingPage(false)
+    try {
+      await api.getAllEvents().then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          const futureEvents = result.data.filter(
+            (item: any) => new Date(item.startsAt) > new Date(),
+          )
+          setIsLoading(false)
+          setIsLoadingPage(false)
+          setEvents(futureEvents)
+        }
+      })
+    } catch (e: any) {
+      if (e.response?.status === 500) {
+        history.push('/404')
+      }
     }
-    setEvents(futureEvents)
   }
 
   const fetchPastEvents = async () => {
-    const { data, status } = await getAllEvents()
-    const futureEvents = data.filter(
-      (item: any) => new Date(item.startsAt) < new Date(),
-    )
-
-    if (status === 200) {
-      setIsLoading(false)
-      setIsLoadingPage(false)
+    try {
+      await api.getAllEvents().then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          const pastEvents = result.data.filter(
+            (item: any) => new Date(item.startsAt) < new Date(),
+          )
+          setIsLoading(false)
+          setIsLoadingPage(false)
+          setEvents(pastEvents)
+        }
+      })
+    } catch (e: any) {
+      if (e.response?.status === 500) {
+        history.push('/404')
+      }
     }
-
-    setEvents(futureEvents)
   }
 
-  useEffect(() => {
-    console.log(isLoading, 'isLoading')
-  }, [isLoading])
-
-  const pushToDetail = (event: any, id: any) => {
-    history.push(`/events/${id}/detail`)
-  }
   return (
     <>
       {isModal && (
@@ -159,7 +163,7 @@ const EventsPage = () => {
                       capacity={item.capacity}
                     />
                     {defineButton(
-                      los,
+                      userData,
                       item,
                       history,
                       onReset,
@@ -185,7 +189,7 @@ const EventsPage = () => {
                       capacity={item.capacity}
                     >
                       {defineButton(
-                        los,
+                        userData,
                         item,
                         history,
                         onReset,

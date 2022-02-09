@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button } from '../components/Button'
-import { unattendEvent, attendEvent } from '../services/events'
+import api from '../api'
+import { AxiosResponse } from 'axios'
 
 export const defineButton = (
   user: any,
@@ -13,16 +14,30 @@ export const defineButton = (
   const attendToEvent = async (event: any, id: string) => {
     setLoading(id)
     event.stopPropagation()
-    const { status } = await attendEvent(id)
-    onReset()
+    try {
+      await api.attendAnEvent(id).then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          onReset()
+        }
+      })
+    } catch (e: any) {
+      history.push('/404')
+    }
   }
 
   //TODO: look into deletion method
   const unattendToEvent = async (event: any, id: string) => {
     setLoading(id)
     event.stopPropagation()
-    const responce = await unattendEvent(id)
-    onReset()
+    try {
+      await api.unattendAnEvent(id).then((result: AxiosResponse) => {
+        if (result.status === 200) {
+          onReset()
+        }
+      })
+    } catch (e: any) {
+      history.push('/404')
+    }
   }
 
   const pushToEditEvent = (event: any, id: any) => {

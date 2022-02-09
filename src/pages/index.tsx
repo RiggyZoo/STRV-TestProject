@@ -6,14 +6,12 @@ import { ErrorPage } from './errorPage'
 import EventDetail from './eventDetail'
 
 const ListOfPages = () => {
-  const history = useHistory()
-
   return (
     <Switch>
-      <Route path={ListOfRoutes.events} component={EventsPage} />
-      <Route path={ListOfRoutes.eventDetail} component={EventDetail} />
+      <Route exact path={ListOfRoutes.events} component={EventsPage} />
+      <Route exact path={ListOfRoutes.eventDetail} component={EventDetail} />
       <Route exact path={ListOfRoutes.errorPage} component={ErrorPage} />
-      {/* <Redirect to="/404" />*/}
+      <Redirect to="/404" />
     </Switch>
   )
 }

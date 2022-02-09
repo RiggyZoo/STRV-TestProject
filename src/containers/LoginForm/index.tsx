@@ -11,13 +11,11 @@ import {
 } from './styles'
 import { InputField } from '../InputContainer'
 import { Button } from '../../components/Button'
-
-import { connector } from '../../connector/connector'
-import { login } from '../../services/login'
 import { useCurrentUser } from '../../contexts/CurrentUser'
-import { setUser } from '../../helpers/currentUser'
-import { setRefreshToken, setToken } from '../../utils/token'
-import { useHistory } from 'react-router-dom'
+import { setRefreshToken, setToken, setUserInfo } from '../../utils/token'
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
+import api from '../../api'
+import { AxiosResponse } from 'axios'
 
 interface LoginForm {
   email: string
@@ -26,6 +24,7 @@ interface LoginForm {
 const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   const [isError, setIsError] = useState<boolean>(false)
   const { setAuthed, setUserData } = useCurrentUser()
+
   const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
 
@@ -39,23 +38,24 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   ) => {
     actions.setSubmitting(true)
     setIsLoading(true)
-    localStorage.clear()
-    const { data, jwt, status, refreshJwt } = await login(values)
-
-    if (data && status === 200) {
-      setAuthed(true)
-      setToken(jwt)
-      setRefreshToken(refreshJwt)
-
-      window.localStorage.setItem('user', JSON.stringify(data))
-      const user = JSON.parse(window.localStorage.getItem('user') || ' ')
-      setUserData(user)
-      history.push('/events/all')
-    }
-
-    if (status === 400) {
-      setIsError(true)
-      actions.setErrors({ email: ' ', password: ' ' })
+    try {
+      await api.login(values).then((result: AxiosResponse) => {
+        console.log(result.headers.authorization)
+        if (result.status === 200) {
+          setAuthed(true)
+          setToken(result.headers.authorization)
+          setRefreshToken(result.headers['refresh-token'])
+          setUserInfo(result.data)
+          setUserData(result.data)
+        }
+        history.push('/events/all')
+      })
+    } catch (e: any) {
+      console.log(e.response?.status)
+      if (e.response.status === 400) {
+        setIsError(true)
+        actions.setErrors({ email: ' ', password: ' ' })
+      }
     }
     actions.setSubmitting(false)
     setIsLoading(false)
@@ -95,6 +95,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
             </FieldsContainer>
             <div>
               <Button
+                disabled={props.isSubmitting}
                 type="submit"
                 theme="green"
                 size="main"

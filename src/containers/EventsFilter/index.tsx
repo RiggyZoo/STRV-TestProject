@@ -21,24 +21,29 @@ const EventsFilter: FC<EventsFilterProps> = ({ filterType }) => {
     setViewMode('list')
     localStorage.setItem('mode', 'list')
   }
+
+  const setPage = (event: string) => {
+    localStorage.setItem('events', event)
+    history.push(`/events/${event}`)
+  }
   return (
     <Container>
       <FilterContainer>
         <LinkButton
           isActive={filterType === 'all'}
-          onClick={() => history.push('/events/all')}
+          onClick={() => setPage('all')}
         >
           All events
         </LinkButton>
         <LinkButton
           isActive={filterType === 'future'}
-          onClick={() => history.push('/events/future')}
+          onClick={() => setPage('future')}
         >
           Future events
         </LinkButton>
         <LinkButton
           isActive={filterType === 'past'}
-          onClick={() => history.push('/events/past')}
+          onClick={() => setPage('past')}
         >
           Past events
         </LinkButton>
