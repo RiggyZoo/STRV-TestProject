@@ -14,23 +14,6 @@ export const Loader: FC<LoaderProps> = ({
 
   ...rest
 }) => {
-  const sizeCss = {
-    normal: {
-      height: '12px',
-      transformOrigin: '1px 20.175px',
-      color: colors.white,
-    },
-    small: {
-      height: '8px',
-      transformOrigin: '1px 12.175px',
-      color: colors.white,
-    },
-    onPage: {
-      height: '12px',
-      transformOrigin: '1px 20.175px',
-      color: colors.inputValue,
-    },
-  }
   return (
     <Container>
       <Inner top={top} right={right} size={size}>

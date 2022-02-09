@@ -35,6 +35,7 @@ interface Params {
 }
 
 const EventDetail = () => {
+  const [isLoadingPage, setIsLoadingPage] = useState<boolean>(true)
   const [isMyEvent, setIsMyEvent] = useState(() => false)
   const [isLoading, setIsLoading] = useState(false)
   const [event, setEvent] = useState<Events>()
@@ -72,6 +73,7 @@ const EventDetail = () => {
           )
 
           setIsLoading(false)
+          setIsLoadingPage(false)
         }
       })
     } catch (e: any) {
@@ -82,6 +84,7 @@ const EventDetail = () => {
   }
 
   useEffect(() => {
+    setIsLoadingPage(true)
     fetchOneEvent()
   }, [id, reset])
 
@@ -105,88 +108,94 @@ const EventDetail = () => {
       ) : (
         <>
           <PageLayout isDetail={!isMyEvent}>
-            <ContentHeader>
-              <EventDetailTitle>{`Detail:${event?.id}`}</EventDetailTitle>
-              {isMyEvent && (
-                <DeleteButton onClick={() => onDeleteEvent(event?.id)}>
-                  <SvgElement src={TrashIcon} alt="icon" />
-                  {isBreakPoint && 'Delete event'}
-                </DeleteButton>
-              )}
-            </ContentHeader>
+            {!isLoadingPage ? (
+              <>
+                <ContentHeader>
+                  <EventDetailTitle>{`Detail:${event?.id}`}</EventDetailTitle>
+                  {isMyEvent && (
+                    <DeleteButton onClick={() => onDeleteEvent(event?.id)}>
+                      <SvgElement src={TrashIcon} alt="icon" />
+                      {isBreakPoint && 'Delete event'}
+                    </DeleteButton>
+                  )}
+                </ContentHeader>
 
-            <ContentWrapper>
-              {isMyEvent ? (
-                <EventForm
-                  eventID={event?.id}
-                  onClose={() => history.push('/events/all')}
-                  onReset={() => {}}
-                />
-              ) : (
-                <EventDetailWrapper>
-                  <EventBox style={{ minWidth: '100%' }}>
-                    <EventBox.Date date={event?.startsAt} />
-                    <EventBox.Name>{event?.title}</EventBox.Name>
-                    <EventBox.Owner>
-                      {event?.owner.firstName} {event?.owner.lastName}
-                    </EventBox.Owner>
-                    <EventBox.Description>
-                      {event?.description}
-                    </EventBox.Description>
-                    <EventBox.Capacity
-                      attendees={event?.attendees.length}
-                      capacity={event?.capacity}
-                    >
-                      {event &&
-                        defineButton(
-                          userData,
-                          event,
-                          history,
-                          onReset,
-                          isLoading,
-                          setIsLoading,
+                <ContentWrapper>
+                  {isMyEvent ? (
+                    <EventForm
+                      eventID={event?.id}
+                      onClose={() => history.push('/events/all')}
+                      onReset={() => {}}
+                    />
+                  ) : (
+                    <EventDetailWrapper>
+                      <EventBox style={{ minWidth: '100%' }}>
+                        <EventBox.Date date={event?.startsAt} />
+                        <EventBox.Name>{event?.title}</EventBox.Name>
+                        <EventBox.Owner>
+                          {event?.owner.firstName} {event?.owner.lastName}
+                        </EventBox.Owner>
+                        <EventBox.Description>
+                          {event?.description}
+                        </EventBox.Description>
+                        <EventBox.Capacity
+                          attendees={event?.attendees.length}
+                          capacity={event?.capacity}
+                        >
+                          {event &&
+                            defineButton(
+                              userData,
+                              event,
+                              history,
+                              onReset,
+                              isLoading,
+                              setIsLoading,
+                            )}
+                        </EventBox.Capacity>
+                      </EventBox>
+                    </EventDetailWrapper>
+                  )}
+                  {isBreakPoint ? (
+                    <Attendees>
+                      <AttendTitle>Attendees</AttendTitle>
+                      <AttendItemWrapper>
+                        {amIAttended && (
+                          <AttendItem amIAttended={true}>You</AttendItem>
                         )}
-                    </EventBox.Capacity>
-                  </EventBox>
-                </EventDetailWrapper>
-              )}
-              {isBreakPoint ? (
-                <Attendees>
-                  <AttendTitle>Attendees</AttendTitle>
-                  <AttendItemWrapper>
-                    {amIAttended && (
-                      <AttendItem amIAttended={true}>You</AttendItem>
-                    )}
-                    {event?.attendees.map((item) => (
-                      <AttendItem key={item._id} amIAttended={false}>
-                        {item.firstName} {item.lastName}
-                      </AttendItem>
-                    ))}
-                  </AttendItemWrapper>
-                </Attendees>
-              ) : !isMyEvent ? (
-                <Attendees>
-                  <AttendTitle>Attendees</AttendTitle>
-                  <AttendItemWrapper>
-                    {amIAttended && (
-                      <AttendItem amIAttended={amIAttended}>You</AttendItem>
-                    )}
-                    {event?.attendees.map((item) => (
-                      <AttendItem key={item._id} amIAttended={false}>
-                        {item.firstName} {item.lastName}
-                      </AttendItem>
-                    ))}
-                  </AttendItemWrapper>
-                </Attendees>
-              ) : null}
-            </ContentWrapper>
-            {!isModal && !isMyEvent && (
-              <CircleButtonLayout>
-                <CircleButton
-                  theme="default"
-                  onClick={() => setIsModal(true)}
-                />
-              </CircleButtonLayout>
+                        {event?.attendees.map((item) => (
+                          <AttendItem key={item._id} amIAttended={false}>
+                            {item.firstName} {item.lastName}
+                          </AttendItem>
+                        ))}
+                      </AttendItemWrapper>
+                    </Attendees>
+                  ) : !isMyEvent ? (
+                    <Attendees>
+                      <AttendTitle>Attendees</AttendTitle>
+                      <AttendItemWrapper>
+                        {amIAttended && (
+                          <AttendItem amIAttended={amIAttended}>You</AttendItem>
+                        )}
+                        {event?.attendees.map((item) => (
+                          <AttendItem key={item._id} amIAttended={false}>
+                            {item.firstName} {item.lastName}
+                          </AttendItem>
+                        ))}
+                      </AttendItemWrapper>
+                    </Attendees>
+                  ) : null}
+                </ContentWrapper>
+                {!isModal && !isMyEvent && (
+                  <CircleButtonLayout>
+                    <CircleButton
+                      theme="default"
+                      onClick={() => setIsModal(true)}
+                    />
+                  </CircleButtonLayout>
+                )}
+              </>
+            ) : (
+              <Loader size="onPage" top="100%" right="50%" />
             )}
           </PageLayout>
         </>
