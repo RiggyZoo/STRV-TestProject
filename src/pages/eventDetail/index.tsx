@@ -74,7 +74,11 @@ const EventDetail = () => {
       await api.getOneEvent(id).then((result: AxiosResponse) => {
         if (result.status === 200) {
           if (result.data.owner._id === userData?._id) {
-            setIsMyEvent(true)
+            if (new Date(result.data.startsAt) < new Date()) {
+              setIsMyEvent(false)
+            } else {
+              setIsMyEvent(true)
+            }
           }
 
           setEvent(result.data)
@@ -195,7 +199,7 @@ const EventDetail = () => {
           ) : null}
         </ContentWrapper>
       </PageLayout>
-      {!isModal && (
+      {!isModal && !isMyEvent && (
         <CircleButtonLayout isConfirm={true}>
           <CircleButton theme="default" onClick={() => setIsModal(true)} />
         </CircleButtonLayout>
