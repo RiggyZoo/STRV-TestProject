@@ -8,7 +8,7 @@ html {
    * use only % metrics, only so user's settings will be apply.
    */
   font-size: 100%;
-
+  height: 100%;
   /*
    * Line height will be 1.5 bigger, than font size in an element.
    */
