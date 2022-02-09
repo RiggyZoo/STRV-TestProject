@@ -36,21 +36,17 @@ export const AttendTitle = styled.span`
   font-size: 22px;
   line-height: 32px;
 `
-export const AttendItem = styled.div<{ isMyEvent?: boolean }>`
+export const AttendItem = styled.div<{ amIAttended?: boolean }>`
   font-size: 13px;
   color: ${colors.greySecondary};
-  background-color: ${({ isMyEvent }) =>
-    isMyEvent ? colors.white : colors.grey};
+  background-color: ${({ amIAttended }) =>
+    amIAttended ? colors.white : colors.grey};
   padding: 0 1rem;
-  line-height: 31px;
+  line-height: 27px;
   border-radius: 100px;
   margin-right: 0.5rem;
   margin-bottom: 1rem;
-  ${({ isMyEvent }) =>
-    isMyEvent &&
-    css`
-      border: 2px solid ${colors.grey};
-    `}
+  border: 2px solid ${colors.grey};
 `
 export const AttendItemWrapper = styled.div`
   display: flex;

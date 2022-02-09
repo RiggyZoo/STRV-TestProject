@@ -10,7 +10,7 @@ const Capacity: FC<ICapacityProps> = ({ children, attendees, capacity }) => {
   return (
     <Container>
       <CapacityContainer>
-        <img src={UserIcon} alt="" />
+        <img src={UserIcon} alt="icon" />
         <span>{`${attendees} of ${capacity}`}</span>
       </CapacityContainer>
 

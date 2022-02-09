@@ -7,6 +7,7 @@ import {
   FieldContainer,
   FieldsContainer,
   MainTitle,
+  SignUpContainer,
   Title,
 } from './styles'
 import { InputField } from '../InputContainer'
@@ -16,6 +17,7 @@ import { setRefreshToken, setToken, setUserInfo } from '../../utils/token'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
 import api from '../../api'
 import { AxiosResponse } from 'axios'
+import { RightContent, SignUpButton } from '../LoginPage/styles'
 
 interface LoginForm {
   email: string
@@ -24,6 +26,7 @@ interface LoginForm {
 const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
   const [isError, setIsError] = useState<boolean>(false)
   const { setAuthed, setUserData } = useCurrentUser()
+  const [showPassword, setShowPassword] = useState(false)
 
   const [isLoading, setIsLoading] = useState(false)
   const history = useHistory()
@@ -42,7 +45,6 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
       await api
         .login({ ...values, email: values.email.toLowerCase() })
         .then((result: AxiosResponse) => {
-          console.log(result.headers.authorization)
           if (result.status === 200) {
             setAuthed(true)
             setToken(result.headers.authorization)
@@ -54,7 +56,6 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
           history.push('/events/all')
         })
     } catch (e: any) {
-      console.log(e.response?.status)
       if (e.response.status === 400) {
         setIsError(true)
         actions.setErrors({ email: ' ', password: ' ' })
@@ -62,6 +63,10 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
     }
     actions.setSubmitting(false)
     setIsLoading(false)
+  }
+
+  const togglePassword = () => {
+    setShowPassword(!showPassword)
   }
 
   return (
@@ -89,13 +94,22 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
               </FieldContainer>
               <FieldContainer>
                 <Field
-                  type="password"
+                  onShowPassword={() => togglePassword()}
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   label="Password"
                   component={InputField}
                 />
               </FieldContainer>
+              {!isBreakPoint && (
+                <SignUpContainer>
+                  <RightContent>
+                    Don’t have account?<SignUpButton>SIGN UP</SignUpButton>
+                  </RightContent>
+                </SignUpContainer>
+              )}
             </FieldsContainer>
+
             <div>
               <Button
                 disabled={props.isSubmitting}

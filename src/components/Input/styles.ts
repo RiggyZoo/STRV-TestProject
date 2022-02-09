@@ -1,6 +1,7 @@
 import { FormikErrors } from 'formik'
 import styled, { css } from 'styled-components'
 import { colors } from '../../styles/themes'
+import Cursor from '../../assets/icons/Pointer.png'
 
 interface InputProps {
   disabled?: boolean
@@ -14,7 +15,12 @@ interface InputProps {
 export const Container = styled.div<InputProps>`
   position: relative;
 `
-
+export const Icon = styled.img`
+  position: absolute;
+  right: 0;
+  z-index: 0;
+  cursor: url(${Cursor}), pointer;
+`
 export const InputField = styled.input<InputProps>`
   outline: none;
   -webkit-appearance: none;

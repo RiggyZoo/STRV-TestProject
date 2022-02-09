@@ -23,12 +23,16 @@ export const MainTitle = styled.h1`
 `
 export const Title = styled.h3`
   font-size: 1.125rem;
+  text-align: center;
   color: ${colors.greySecondary};
+  @media (min-width: ${breakPoints.small}) {
+    text-align: left;
+  }
 `
 export const FieldsContainer = styled.div`
   display: flex;
   align-content: space-around;
-  margin: 4rem 0;
+  margin: 4rem 0 2.5rem;
   width: 100%;
   flex-direction: column;
 `
@@ -37,9 +41,15 @@ export const FieldContainer = styled.div`
     margin-bottom: 2rem;
   }
 `
+export const SignUpContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+`
 export const ErrorMessage = styled.div`
   font-size: 1.125rem;
   line-height: 1.5rem;
+  text-align: center;
   color: ${colors.secondary};
   font-family: Hind-Light, sans-serif;
 `

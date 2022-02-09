@@ -1,5 +1,5 @@
 import RightImage from '../../assets/img/Image.png'
-import { colors } from '../../styles/themes'
+import { breakPoints, colors } from '../../styles/themes'
 import styled from 'styled-components'
 
 interface IsBreakpointProp {
@@ -10,18 +10,20 @@ export const Container = styled.div<IsBreakpointProp>`
   display: ${({ isBreakPoint }) => (!isBreakPoint ? 'block' : 'flex')};
   flex-direction: row;
   min-height: ${({ isBreakPoint }) => isBreakPoint && '100vh'};
-  min-height: 100vh;
   background-color: ${colors.white};
 `
 
 export const TopPart = styled.div`
   width: 100%;
-  padding: 0 3rem;
+  padding: 1.75rem 1.5rem;
   display: flex;
   position: absolute;
   justify-content: space-between;
+  @media (min-width: ${breakPoints.small}) {
+    padding: 2.5rem 4rem;
+  }
 `
-export const RightContent = styled.div`
+export const LeftContentBackground = styled.div`
   background-image: url(${RightImage});
   background-position: center center;
   background-size: cover;
@@ -29,7 +31,6 @@ export const RightContent = styled.div`
   display: flex;
   z-index: 1;
   min-width: 30rem;
-  max-width: 30rem;
   position: relative;
   justify-content: flex-end;
   padding-bottom: 9.25rem;
@@ -60,7 +61,26 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
   @media (max-width: 415px) {
-    margin: 0 1.5rem;
+    padding: 0 1.5rem;
+  }
+`
+export const LeftContent = styled.img`
+  z-index: 10;
+`
+export const RightContent = styled.div`
+  display: flex;
+  gap: 0.2rem;
+  font-size: 0.875rem;
+  color: ${colors.inputLabel};
+`
+
+export const SignUpButton = styled.span`
+  color: ${colors.inputValue};
+  letter-spacing: 1px;
+  transition: all 0.4s;
+
+  &:hover {
+    text-decoration: underline;
   }
 `
 export const Line = styled.div`

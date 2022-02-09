@@ -57,6 +57,7 @@ export const DropdownMenuContainer = styled.ul`
 `
 
 export const StyledDropDownMenuItem = styled.li`
+  white-space: nowrap;
   color: ${colors.dropdownLink};
   cursor: url(${Cursor}), pointer;
   & > span:hover {

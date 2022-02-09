@@ -49,10 +49,10 @@ const PageLayout: FC<PageLayoutProps> = ({
   return (
     <Container>
       <PageHeader>
-        <LeftContent src={LeftContentSvg} />
+        <LeftContent src={LeftContentSvg} alt="icon" />
         {isDetail && isBreakPoint && (
           <BackButton onClick={() => goToPrevPage()}>
-            <SvgElement src={BackIcon} />
+            <SvgElement src={BackIcon} alt="icon" />
             Back to events
           </BackButton>
         )}

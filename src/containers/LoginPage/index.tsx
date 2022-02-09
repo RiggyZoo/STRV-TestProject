@@ -11,13 +11,17 @@ import {
   RightContent,
   Title,
   TopPart,
+  LeftContent,
+  SignUpButton,
+  LeftContentBackground,
 } from './styles'
 import DartVader from '../../assets/img/icon.png'
 import LoginForm from '../LoginForm'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Button } from '../../components/Button'
-
 import { useHistory } from 'react-router-dom'
+import LeftContentSvgWhite from '../../assets/icons/Logo.svg'
+import LeftContentSvgBlack from '../../assets/icons/E..svg'
 
 interface ILoginPageProps {
   error?: boolean
@@ -30,12 +34,19 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
     <>
       <Container isBreakPoint={isBreakPoint}>
         <TopPart>
-          <div>A</div>
-          <div>B</div>
+          <LeftContent
+            src={isBreakPoint ? LeftContentSvgWhite : LeftContentSvgBlack}
+            alt="icon"
+          />
+          {isBreakPoint ? (
+            <RightContent>
+              Don’t have account?<SignUpButton>SIGN UP</SignUpButton>
+            </RightContent>
+          ) : null}
         </TopPart>
 
         {isBreakPoint && (
-          <RightContent>
+          <LeftContentBackground>
             <Title>
               &quot;Great, kid. Don&apos;t <span style={{ display: 'block' }} />{' '}
               get cocky.&quot;
@@ -43,7 +54,7 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
               <span>Han Solo</span>
             </Title>
             {error && <ImageDartVader src={DartVader} />}
-          </RightContent>
+          </LeftContentBackground>
         )}
         <Content>
           {' '}

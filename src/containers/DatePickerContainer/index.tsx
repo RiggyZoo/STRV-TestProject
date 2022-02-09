@@ -41,7 +41,7 @@ const DatePickerContainer: FC<IDatePicker> = ({
 }) => {
   const filterPassedTime = (time: any) => {
     const currentDate = new Date()
-    console.log(rest, 'resr')
+
     if (
       new Date(rest.selectedDateFromField || new Date())?.getDate() !==
       currentDate.getDate()

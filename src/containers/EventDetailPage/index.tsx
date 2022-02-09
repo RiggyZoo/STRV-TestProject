@@ -155,10 +155,10 @@ const EventDetail = () => {
                   <AttendTitle>Attendees</AttendTitle>
                   <AttendItemWrapper>
                     {amIAttended && (
-                      <AttendItem isMyEvent={true}>You</AttendItem>
+                      <AttendItem amIAttended={true}>You</AttendItem>
                     )}
                     {event?.attendees.map((item) => (
-                      <AttendItem key={item._id} isMyEvent={false}>
+                      <AttendItem key={item._id} amIAttended={false}>
                         {item.firstName} {item.lastName}
                       </AttendItem>
                     ))}
@@ -169,10 +169,10 @@ const EventDetail = () => {
                   <AttendTitle>Attendees</AttendTitle>
                   <AttendItemWrapper>
                     {amIAttended && (
-                      <AttendItem isMyEvent={true}>You</AttendItem>
+                      <AttendItem amIAttended={amIAttended}>You</AttendItem>
                     )}
                     {event?.attendees.map((item) => (
-                      <AttendItem key={item._id} isMyEvent={false}>
+                      <AttendItem key={item._id} amIAttended={false}>
                         {item.firstName} {item.lastName}
                       </AttendItem>
                     ))}
