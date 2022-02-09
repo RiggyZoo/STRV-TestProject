@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useCurrentUser } from './contexts/CurrentUser'
 import Routes from './pages/routes'
-import { getToken, getUser } from './utils/token'
+import { getToken, getUser } from './utils/userData'
 
 function App() {
   const { setUserData, authed, setAuthed } = useCurrentUser()

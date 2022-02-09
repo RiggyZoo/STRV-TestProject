@@ -56,9 +56,6 @@ const DatePickerContainer: FC<IDatePicker> = ({
       // @ts-ignore
       onChange(rest.selectedDateFromField)
     }
-    /*  if (onChange) {
-      onChange(null)
-    }*/
   }, [rest.selectedDateFromField])
 
   return (
@@ -79,4 +76,4 @@ const DatePickerContainer: FC<IDatePicker> = ({
   )
 }
 
-export default DatePickerContainer
+export { DatePickerContainer }

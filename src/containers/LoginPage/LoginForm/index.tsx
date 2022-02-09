@@ -10,14 +10,14 @@ import {
   SignUpContainer,
   Title,
 } from './styles'
-import { InputField } from '../InputContainer'
-import { Button } from '../../components/Button'
-import { useCurrentUser } from '../../contexts/CurrentUser'
-import { setRefreshToken, setToken, setUserInfo } from '../../utils/token'
+import { InputField } from '../../../helpers/InputContainer'
+import { Button } from '../../../components/Button'
+import { useCurrentUser } from '../../../contexts/CurrentUser'
+import { setRefreshToken, setToken, setUserInfo } from '../../../utils/userData'
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
-import api from '../../api'
+import api from '../../../api'
 import { AxiosResponse } from 'axios'
-import { RightContent, SignUpButton } from '../LoginPage/styles'
+import { RightContent, SignUpButton } from '../styles'
 
 interface LoginForm {
   email: string

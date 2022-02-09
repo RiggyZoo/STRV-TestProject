@@ -4,7 +4,7 @@ import {
   getToken,
   removeToken,
   setToken,
-} from '../utils/token'
+} from '../utils/userData'
 const baseUrl = process.env.REACT_APP_ENDPOINT
 
 axios.interceptors.request.use(

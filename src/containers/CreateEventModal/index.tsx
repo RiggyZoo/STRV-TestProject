@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import PageLayout from '../PageLayout'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
-import { ErrorMessage, MainTitle } from '../LoginForm/styles'
+import { ErrorMessage, MainTitle } from '../LoginPage/LoginForm/styles'
 import { Container, ModalWrapper } from './styles'
 import { EventForm } from '../EventForm'
 

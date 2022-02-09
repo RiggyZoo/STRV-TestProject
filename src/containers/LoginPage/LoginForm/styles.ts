@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { breakPoints, colors } from '../../styles/themes'
+import { breakPoints, colors } from '../../../styles/themes'
 
 export const Container = styled.div<{ isBreakPoint: boolean }>`
   display: flex;

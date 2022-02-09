@@ -26,11 +26,6 @@ export const Container = styled.div<CircleButtonLayoutProps>`
           bottom: ${isMobile ? '1.5rem' : '2rem'};
         `
       : css`
-          /*  position: ${(isMobile) => (isMobile ? 'sticky' : 'sticky')};
-          float: right;
-          bottom: 2rem;
-          right: 2rem;
-          margin: 1.5rem 1.5rem;*/
           display: flex;
           justify-content: flex-end;
           padding: 1.5rem 1rem 1rem;

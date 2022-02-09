@@ -16,7 +16,7 @@ import {
   LeftContentBackground,
 } from './styles'
 import DartVader from '../../assets/img/icon.png'
-import LoginForm from '../LoginForm'
+import LoginForm from './LoginForm'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import { Button } from '../../components/Button'
 import { useHistory } from 'react-router-dom'

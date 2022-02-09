@@ -1,10 +1,7 @@
 import React from 'react'
 import { FieldProps, getIn } from 'formik'
-import DatePickerContainer from '../DatePickerContainer'
+import { DatePickerContainer } from '../DatePickerContainer'
 
-interface DatePickerFieldProps extends FieldProps {
-  disabled?: boolean
-}
 export const DatePickerField: React.FC<FieldProps> = ({
   field,
   form: { touched, errors, setFieldValue },
@@ -16,7 +13,7 @@ export const DatePickerField: React.FC<FieldProps> = ({
   return (
     <DatePickerContainer
       date={(field.value && new Date(field.value)) || null}
-      onChange={(val) => {
+      onChange={(val: any) => {
         setFieldValue(field.name, val)
       }}
       isTouched={isTouched}
