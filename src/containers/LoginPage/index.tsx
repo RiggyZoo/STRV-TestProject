@@ -27,7 +27,7 @@ interface ILoginPageProps {
   error?: boolean
 }
 const LoginPage: FC<ILoginPageProps> = ({ error }) => {
-  const isBreakPoint = useMediaQuery(400)
+  const isBreakPoint = useMediaQuery(768)
   const history = useHistory()
 
   return (

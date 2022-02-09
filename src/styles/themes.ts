@@ -17,9 +17,7 @@ export const colors = {
   dropdownLink: '#9CA5AF',
   linkButtonNonActive: '#A9AEB4',
   eventBoxDateField: '#CACDD0',
-  transparent: 'transparent',
   circleButtonHovr: '#565D5A',
-  navbar: 'rgba(76, 16, 112, 0.7)',
 }
 
 export const breakPoints = {
