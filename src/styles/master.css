@@ -50,5 +50,5 @@ a {
 }
 
 #root {
-  min-height: -webkit-fill-available;
+ height: 100%;
 }

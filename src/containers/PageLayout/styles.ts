@@ -2,7 +2,9 @@ import styled from 'styled-components'
 import Cursor from '../../assets/icons/Pointer.png'
 import { breakPoints, colors } from '../../styles/themes'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  height: 100%;
+`
 
 export const Content = styled.div`
   position: relative;
