@@ -1,44 +1,61 @@
-import React, { useState } from 'react'
+import React, { FC, ReactNode, useState } from 'react'
 import {
   Container,
   Avatar,
   Name,
   SvgElement,
   DropdownMenuContainer,
+  StyledDropDownMenuItem,
+  FilterTitle,
 } from './styles'
 import DropdownIcon from '../../assets/icons/dropdown.svg'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 interface DropdownProps {
-  onLogout: () => void
+  children: ReactNode
   firstName?: string
   lastName?: string
+  isFilter?: boolean
 }
-const Dropdown = ({ onLogout, firstName, lastName }: DropdownProps) => {
+
+interface DropDownMenuItemProps {
+  children: ReactNode
+  onClick: () => void
+}
+
+const DropdownMenuItem = ({ children, ...rest }: DropDownMenuItemProps) => {
+  return (
+    <StyledDropDownMenuItem {...rest}>
+      <span>{children}</span>
+    </StyledDropDownMenuItem>
+  )
+}
+const Dropdown = ({
+  firstName,
+  lastName,
+  children,
+  isFilter,
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const isBreakPoint = useMediaQuery(768)
   return (
     <Container onClick={() => setIsOpen(!isOpen)}>
-      <Avatar>
-        {firstName?.[0]}
-        {lastName?.[0]}
-      </Avatar>
+      {!isFilter ? (
+        <Avatar>
+          {firstName?.[0]}
+          {lastName?.[0]}
+        </Avatar>
+      ) : (
+        <FilterTitle>Show:</FilterTitle>
+      )}
 
       {isBreakPoint && <Name>{`${firstName} ${lastName}`}</Name>}
-      <SvgElement src={DropdownIcon} alt="icon" />
+      <SvgElement src={DropdownIcon} alt="icon" style={{ color: 'red' }} />
 
-      {isOpen && (
-        <DropdownMenuContainer>
-          <li>
-            <span>My profile</span>
-          </li>
-          <li onClick={onLogout}>
-            <span>Log out</span>
-          </li>
-        </DropdownMenuContainer>
-      )}
+      {isOpen && <DropdownMenuContainer>{children}</DropdownMenuContainer>}
     </Container>
   )
 }
 
+Dropdown.DropdownItem = DropdownMenuItem
 export { Dropdown }

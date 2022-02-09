@@ -48,6 +48,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
           setUserInfo(result.data)
           setUserData(result.data)
         }
+        localStorage.setItem('events', 'all')
         history.push('/events/all')
       })
     } catch (e: any) {

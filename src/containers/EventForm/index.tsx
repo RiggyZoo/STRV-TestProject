@@ -197,7 +197,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
                 </Button>
               </div>
             ) : (
-              <CircleButtonLayout isMobile={!isBreakPoint}>
+              <CircleButtonLayout isMobile={!isBreakPoint} isConfirm={true}>
                 <CircleButton type="submit" theme="confirm" />
               </CircleButtonLayout>
             )}
