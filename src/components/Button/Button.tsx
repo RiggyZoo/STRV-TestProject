@@ -30,7 +30,14 @@ const Button: FC<IButtonProps> = ({
     themes[theme || 'default']
 
   return (
-    <Style ref={ref} type="button" size={size} $loading={$loading} {...rest}>
+    <Style
+      data-testid="button"
+      ref={ref}
+      type="button"
+      size={size}
+      $loading={$loading}
+      {...rest}
+    >
       {$loading && (
         <Loader
           top={size === 'main' ? '12%' : '10%'}

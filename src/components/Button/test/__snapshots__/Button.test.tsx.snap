@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button component tests Matches to snapshot  1`] = `
+<button
+  className="sc-dkPtRN sc-hKwDye gNicrT culDtV"
+  data-testid="button"
+  size="main"
+  type="button"
+>
+   
+  <span>
+    Click
+  </span>
+</button>
+`;
