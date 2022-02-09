@@ -28,21 +28,30 @@ const PageLayout: FC<PageLayoutProps> = ({
   isModal,
   onClose,
 }) => {
-  const { userData, setUserData, setAuthed } = useCurrentUser()
+  const { userData, setAuthed } = useCurrentUser()
   const isBreakPoint = useMediaQuery(768)
   const history = useHistory()
 
   const onLogout = () => {
     removeAll()
-    setUserData(undefined)
     setAuthed(false)
   }
+
+  const goToPrevPage = () => {
+    const prevPage = localStorage.getItem('events')
+    if (prevPage) {
+      history.push(`/events/${prevPage}`)
+    } else {
+      history.push('/events/all')
+    }
+  }
+  const { DropdownItem } = Dropdown
   return (
     <Container>
       <PageHeader>
         <LeftContent src={LeftContentSvg} />
-        {isDetail && (
-          <BackButton onClick={() => history.push('/events/all')}>
+        {isDetail && isBreakPoint && (
+          <BackButton onClick={() => goToPrevPage()}>
             <SvgElement src={BackIcon} />
             Back to events
           </BackButton>
@@ -54,10 +63,11 @@ const PageLayout: FC<PageLayoutProps> = ({
           </CloseButton>
         ) : (
           <Dropdown
-            onLogout={onLogout}
             firstName={userData?.firstName}
             lastName={userData?.lastName}
-          />
+          >
+            <DropdownItem onClick={onLogout}>Log out</DropdownItem>
+          </Dropdown>
         )}
       </PageHeader>
       <Content>{children}</Content>

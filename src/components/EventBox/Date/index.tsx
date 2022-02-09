@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
-import { Container } from './styles'
 import { formatDate } from '../../../helpers/date'
+import { Container } from './styles'
 
 interface IDateProps {
   date?: string

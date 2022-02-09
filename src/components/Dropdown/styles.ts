@@ -37,17 +37,9 @@ export const DropdownMenuContainer = styled.ul`
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.198087);
   border-radius: 14px;
   padding: 1rem;
-
-  & > li {
-    color: ${colors.dropdownLink};
-    cursor: url(${Cursor}), pointer;
-    & > span:hover {
-      border-bottom: 1px solid ${colors.inputValue};
-    }
-    &:last-child {
-      margin-top: 0.5rem;
-    }
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 
   &:before {
     z-index: 1;
@@ -56,10 +48,21 @@ export const DropdownMenuContainer = styled.ul`
     border-radius: 4px;
     height: 15px;
     width: 15px;
-    right: 1rem;
+    right: 1.5rem;
     top: -0.3rem;
     background-color: ${colors.white};
 
     transform: rotate(45deg);
+  }
+`
+
+export const StyledDropDownMenuItem = styled.li`
+  color: ${colors.dropdownLink};
+  cursor: url(${Cursor}), pointer;
+  & > span:hover {
+    border-bottom: 1px solid ${colors.inputValue};
+  }
+  &:last-child(-1) {
+    margin-top: 0.5rem;
   }
 `

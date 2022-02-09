@@ -6,7 +6,7 @@ export const EventDetailTitle = styled.div`
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 1px;
-
+  font-family: Hind-Regular, sans-serif;
   margin-bottom: 41px;
   color: ${colors.linkButtonNonActive};
 `

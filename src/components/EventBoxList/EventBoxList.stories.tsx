@@ -3,7 +3,7 @@ import { Story } from '@storybook/react'
 import { EventBoxList } from './EventBoxList'
 
 export default {
-  title: 'Components/EventBox',
+  title: 'Components/EventBoxList',
   component: EventBoxList,
   argTypes: {},
 }
