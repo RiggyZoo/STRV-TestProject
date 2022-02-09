@@ -1,24 +1,11 @@
-import React, { useEffect } from 'react'
-import {
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch,
-  useHistory,
-  generatePath,
-  useLocation,
-} from 'react-router-dom'
+import React from 'react'
+import { Switch, Route, Redirect, generatePath } from 'react-router-dom'
+import { Routes as RoutesType } from '../types/pages'
 import { ListOfRoutes } from '../types/listOfRoutes'
-import { EventsPage } from './events'
-import LoginPage from '../containers/LoginPage'
-import { PrivateRoute } from '../utils/PrivateRoute'
+import { PrivateRoute } from '../helpers/PrivateRoute'
 import ListOfPages from './index'
 import { ErrorPage } from './errorPage'
-
-interface Routes {
-  localStoreHasJWT: boolean
-  authed: boolean
-}
+import { LoginPage } from './loginPage'
 
 type PagesConfig = {
   list: {
@@ -34,7 +21,7 @@ const pagesConfig: PagesConfig = {
   },
 }
 
-const Routes: React.FC<Routes> = ({ localStoreHasJWT, authed }) => {
+const Routes: React.FC<RoutesType> = ({ localStoreHasJWT, authed }) => {
   return (
     <Switch>
       {localStoreHasJWT ? (

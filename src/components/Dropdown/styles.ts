@@ -48,7 +48,7 @@ export const DropdownMenuContainer = styled.ul`
     border-radius: 4px;
     height: 15px;
     width: 15px;
-    right: 1rem;
+    right: 1.5rem;
     top: -0.3rem;
     background-color: ${colors.white};
 
@@ -65,10 +65,4 @@ export const StyledDropDownMenuItem = styled.li`
   &:last-child(-1) {
     margin-top: 0.5rem;
   }
-`
-
-export const FilterTitle = styled.div`
-  font-size: 0.75rem;
-  font-family: Hind-Regular, sans-serif;
-  color: ${colors.linkButtonNonActive};
 `

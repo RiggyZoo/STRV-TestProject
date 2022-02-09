@@ -1,4 +1,6 @@
-import React, { FC, ReactNode, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
+import DropdownIcon from '../../assets/icons/dropdown.svg'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 import {
   Container,
   Avatar,
@@ -6,16 +8,12 @@ import {
   SvgElement,
   DropdownMenuContainer,
   StyledDropDownMenuItem,
-  FilterTitle,
 } from './styles'
-import DropdownIcon from '../../assets/icons/dropdown.svg'
-import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 interface DropdownProps {
   children: ReactNode
   firstName?: string
   lastName?: string
-  isFilter?: boolean
 }
 
 interface DropDownMenuItemProps {
@@ -30,28 +28,19 @@ const DropdownMenuItem = ({ children, ...rest }: DropDownMenuItemProps) => {
     </StyledDropDownMenuItem>
   )
 }
-const Dropdown = ({
-  firstName,
-  lastName,
-  children,
-  isFilter,
-}: DropdownProps) => {
+const Dropdown = ({ firstName, lastName, children }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false)
+
   const isBreakPoint = useMediaQuery(768)
+
   return (
     <Container onClick={() => setIsOpen(!isOpen)}>
-      {!isFilter ? (
-        <Avatar>
-          {firstName?.[0]}
-          {lastName?.[0]}
-        </Avatar>
-      ) : (
-        <FilterTitle>Show:</FilterTitle>
-      )}
-
+      <Avatar>
+        {firstName?.[0]}
+        {lastName?.[0]}
+      </Avatar>
       {isBreakPoint && <Name>{`${firstName} ${lastName}`}</Name>}
-      <SvgElement src={DropdownIcon} alt="icon" style={{ color: 'red' }} />
-
+      <SvgElement src={DropdownIcon} alt="icon" />
       {isOpen && <DropdownMenuContainer>{children}</DropdownMenuContainer>}
     </Container>
   )

@@ -11,6 +11,7 @@ import CircleButtonLayout from '../CircleButtonLayout'
 import { useMediaQuery } from '../../hooks/useMediaQuery'
 import api from '../../api'
 import { AxiosResponse } from 'axios'
+import { EventFormFormik } from '../../types/events'
 
 interface EventFormProps {
   onClose: () => void
@@ -49,8 +50,9 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
 
   const createEventHandler = async (
     values: any,
-    actions: FormikHelpers<any>,
+    actions: FormikHelpers<EventFormFormik>,
   ) => {
+    actions.setSubmitting(true)
     //TODO: Maybe use localstorage to save page when we were?
     if (JSON.stringify(initValues) === JSON.stringify(values)) {
       history.push('/events/all')
@@ -65,6 +67,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
     )
 
     delete values.time
+
     try {
       eventID
         ? await api
@@ -90,26 +93,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
         actions.setFieldError('time', 'Start of event must be in future')
       }
     }
-    /* const { status } = eventID
-      ? await updateEvent(
-          { ...values, startsAt: new Date(correctTimeAndDate) },
-          eventID,
-        )
-      : await createEvent({
-          ...values,
-          startsAt: new Date(correctTimeAndDate),
-        })
-
-    if (eventID && status === 200) {
-      onClose()
-    }
-    if (status === 400) {
-      actions.setFieldError('time', 'Start of event must be in future')
-    }
-    if (status === 201) {
-      onClose()
-      onReset()
-    }*/
+    actions.setSubmitting(false)
   }
   return (
     <>
@@ -198,7 +182,11 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
               </div>
             ) : (
               <CircleButtonLayout isMobile={!isBreakPoint} isConfirm={true}>
-                <CircleButton type="submit" theme="confirm" />
+                <CircleButton
+                  type="submit"
+                  disabled={props.isSubmitting}
+                  theme="confirm"
+                />
               </CircleButtonLayout>
             )}
           </Form>

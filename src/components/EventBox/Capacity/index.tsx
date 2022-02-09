@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
+import UserIcon from '../../../assets/icons/icon-user.svg'
 import { Container, CapacityContainer } from './styles'
-import UserIcon from './icon-user.svg'
 
 interface ICapacityProps {
   attendees?: number

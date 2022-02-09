@@ -1,6 +1,5 @@
 import React from 'react'
-import { Story } from '@storybook/react'
-import { EventBox, IEventBoxProps } from './EventBox'
+import { EventBox } from './EventBox'
 
 export default {
   title: 'Components/EventBox',

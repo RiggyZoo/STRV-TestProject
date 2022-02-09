@@ -26,7 +26,6 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
   const isBreakPoint = useMediaQuery(400)
   const history = useHistory()
 
-  console.log(isBreakPoint, 'bereka')
   return (
     <>
       <Container isBreakPoint={isBreakPoint}>
@@ -79,4 +78,4 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
   )
 }
 
-export default LoginPage
+export { LoginPage }

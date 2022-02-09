@@ -10,6 +10,7 @@ export const Container = styled.div<IsBreakpointProp>`
   display: ${({ isBreakPoint }) => (!isBreakPoint ? 'block' : 'flex')};
   flex-direction: row;
   min-height: ${({ isBreakPoint }) => isBreakPoint && '100%'};
+  background-color: ${colors.white};
 `
 
 export const TopPart = styled.div`
