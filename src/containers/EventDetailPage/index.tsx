@@ -129,29 +129,23 @@ const EventDetail = () => {
                     />
                   ) : (
                     <EventDetailWrapper>
-                      <EventBox style={{ minWidth: '100%' }}>
-                        <EventBox.Date date={event?.startsAt} />
-                        <EventBox.Name>{event?.title}</EventBox.Name>
-                        <EventBox.Owner>
-                          {event?.owner.firstName} {event?.owner.lastName}
-                        </EventBox.Owner>
-                        <EventBox.Description>
-                          {event?.description}
-                        </EventBox.Description>
-                        <EventBox.Capacity
-                          attendees={event?.attendees.length}
-                          capacity={event?.capacity}
-                        >
-                          {event &&
-                            defineButton(
-                              userData,
-                              event,
-                              history,
-                              onReset,
-                              isLoading,
-                              setIsLoading,
-                            )}
-                        </EventBox.Capacity>
+                      <EventBox
+                        date={event?.startsAt}
+                        attendees={event?.attendees.length}
+                        capacity={event?.capacity}
+                        description={event?.description}
+                        name={event?.title}
+                        owner={`${event?.owner.firstName} ${event?.owner.lastName}`}
+                      >
+                        {event &&
+                          defineButton(
+                            userData,
+                            event,
+                            history,
+                            onReset,
+                            isLoading,
+                            setIsLoading,
+                          )}
                       </EventBox>
                     </EventDetailWrapper>
                   )}

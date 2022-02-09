@@ -1,6 +1,7 @@
 import React from 'react'
 import { Story } from '@storybook/react'
 import { EventBoxList } from './EventBoxList'
+import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 export default {
   title: 'Components/EventBoxList',
@@ -9,17 +10,18 @@ export default {
 }
 
 export const Default = () => {
+  const isBreakPoint = useMediaQuery(768)
   return (
-    <EventBoxList>
-      <EventBoxList.Date date="2022-03-01T21:22:14.277Z" />
-      <EventBoxList.Name>Even name</EventBoxList.Name>
-      <EventBoxList.Owner>Event Owner</EventBoxList.Owner>
-      <EventBoxList.Description>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum esse
-        facilis fuga inventore placeat quae quis quo. Doloremque, mollitia,
-        repellendus?
-      </EventBoxList.Description>
-      <EventBoxList.Capacity attendees={12} capacity={100} />
+    <EventBoxList
+      name={'Name'}
+      attendees={1}
+      owner={'Owner'}
+      capacity={10}
+      date={'2022-03-01T21:22:14.277Z'}
+      description={'description'}
+      isBreakPoint={isBreakPoint}
+    >
+      children
     </EventBoxList>
   )
 }

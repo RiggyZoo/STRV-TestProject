@@ -145,23 +145,15 @@ const EventsPage = () => {
               event?.map((item: any) =>
                 viewMode === 'list' ? (
                   <EventBoxList
-                    key={item._id}
                     onClick={() => history.push(`/events/${item._id}/detail`)}
+                    isBreakPoint={isBreakPoint}
+                    name={item.title}
+                    date={item.startsAt}
+                    description={item.description}
+                    owner={`${item.owner.firstName} ${item.owner.lastName}`}
+                    attendees={item.attendees.length}
+                    capacity={item.capacity}
                   >
-                    <EventBoxList.Name>{item.title}</EventBoxList.Name>
-                    <EventBoxList.Description>
-                      {item.description}
-                    </EventBoxList.Description>
-                    {isBreakPoint && (
-                      <EventBoxList.Owner>
-                        {item.owner.firstName} {item.owner.lastName}
-                      </EventBoxList.Owner>
-                    )}
-                    <EventBoxList.Date date={item.startsAt} />
-                    <EventBoxList.Capacity
-                      attendees={item.attendees.length}
-                      capacity={item.capacity}
-                    />
                     {defineButton(
                       userData,
                       item,
@@ -173,30 +165,24 @@ const EventsPage = () => {
                   </EventBoxList>
                 ) : (
                   <EventBox
+                    isBreakPoint={isBreakPoint}
                     key={item._id}
                     onClick={() => history.push(`/events/${item._id}/detail`)}
+                    date={item.startsAt}
+                    description={item.description}
+                    name={item.title}
+                    owner={`${item.owner.firstName} ${item.owner.lastName}`}
+                    attendees={item.attendees.length}
+                    capacity={item.capacity}
                   >
-                    <EventBox.Date date={item.startsAt} />
-                    <EventBox.Name>{item.title}</EventBox.Name>
-                    <EventBox.Owner>
-                      {item.owner.firstName} {item.owner.lastName}
-                    </EventBox.Owner>
-                    <EventBox.Description>
-                      {item.description}
-                    </EventBox.Description>
-                    <EventBox.Capacity
-                      attendees={item.attendees.length}
-                      capacity={item.capacity}
-                    >
-                      {defineButton(
-                        userData,
-                        item,
-                        history,
-                        onReset,
-                        isLoading,
-                        setIsLoading,
-                      )}
-                    </EventBox.Capacity>
+                    {defineButton(
+                      userData,
+                      item,
+                      history,
+                      onReset,
+                      isLoading,
+                      setIsLoading,
+                    )}
                   </EventBox>
                 ),
               )}
