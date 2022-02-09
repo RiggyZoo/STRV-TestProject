@@ -6,7 +6,6 @@ export const Container = styled.div``
 
 export const Content = styled.div`
   position: relative;
-  min-height: 100vh;
   margin: 4.25rem 0.5rem 0 0.5rem;
   @media (min-width: 48em) {
     margin: 6.4375rem 7.5rem 11.5rem;
