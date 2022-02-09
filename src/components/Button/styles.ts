@@ -22,8 +22,8 @@ export const DefaultButton = styled.button<IButtonProps>`
   transition: all 0.2s;
 
   & > span {
-    background-color: ${({ loading }) => loading && 'red'};
-    visibility: ${({ loading }) => loading && 'hidden'};
+    background-color: ${({ $loading }) => $loading && 'red'};
+    visibility: ${({ $loading }) => $loading && 'hidden'};
   }
   &:hover {
     background: ${colors.primaryHover};

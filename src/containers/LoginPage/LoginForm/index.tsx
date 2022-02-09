@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import * as Yup from 'yup'
-import { Field, Form, Formik, FormikHelpers } from 'formik'
+import { Field, Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import {
   Container,
   ErrorMessage,
@@ -71,7 +71,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
 
   return (
     <Formik initialValues={initValues} onSubmit={handleSubmit}>
-      {(props) => (
+      {(props: FormikProps<any>) => (
         <Form>
           <Container isBreakPoint={isBreakPoint}>
             <MainTitle>Sign in to Eventio.</MainTitle>
@@ -116,7 +116,7 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
                 type="submit"
                 theme="green"
                 size="main"
-                loading={isLoading}
+                $loading={isLoading}
               >
                 Sign in
               </Button>

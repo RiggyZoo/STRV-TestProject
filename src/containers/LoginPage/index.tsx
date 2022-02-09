@@ -73,7 +73,7 @@ const LoginPage: FC<ILoginPageProps> = ({ error }) => {
                 <Button
                   theme="refresh"
                   size="main"
-                  loading={false}
+                  $loading={false}
                   onClick={() => history.push('/events/all')}
                 >
                   refresh

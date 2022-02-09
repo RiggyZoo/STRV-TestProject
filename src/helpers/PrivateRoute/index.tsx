@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, RouteComponentProps } from 'react-router-dom'
 
 interface PrivateRouteProps {
   component: React.ElementType
@@ -14,7 +14,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({
 }) => {
   return (
     <Route
-      render={(props) =>
+      render={(props: RouteComponentProps<any>) =>
         localStoreHasJWT ? (
           authed ? (
             <Component {...props} />

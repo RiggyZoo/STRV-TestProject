@@ -15,5 +15,5 @@ Default.args = {
   children: 'Button',
   theme: 'red',
   size: 'main',
-  loading: false,
+  $loading: false,
 }

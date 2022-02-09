@@ -7,14 +7,14 @@ export interface IButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   theme: 'green' | 'red' | 'grey' | 'refresh'
   size: 'main' | 'small'
-  loading?: any
+  $loading?: any
   ref?: any
 }
 
 const Button: FC<IButtonProps> = ({
   children,
   theme = 'green',
-  loading,
+  $loading,
   ref,
   size = 'small',
   ...rest
@@ -30,8 +30,8 @@ const Button: FC<IButtonProps> = ({
     themes[theme || 'default']
 
   return (
-    <Style ref={ref} type="button" size={size} $loading={loading} {...rest}>
-      {loading && (
+    <Style ref={ref} type="button" size={size} $loading={$loading} {...rest}>
+      {$loading && (
         <Loader
           top={size === 'main' ? '12%' : '10%'}
           right="50%"

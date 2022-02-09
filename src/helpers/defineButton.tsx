@@ -57,7 +57,7 @@ export const defineButton = (
         size="small"
         id={event.id}
         key={event.id}
-        loading={false}
+        $loading={false}
         onClick={(click) => pushToEditEvent(click, event._id)}
         style={{ justifySelf: 'end' }}
       >
@@ -71,7 +71,7 @@ export const defineButton = (
       <Button
         theme="red"
         size="small"
-        loading={event._id === loading}
+        $loading={event._id === loading}
         style={{ justifySelf: 'end' }}
         onClick={(click) => unattendToEvent(click, event._id)}
       >
@@ -83,7 +83,7 @@ export const defineButton = (
       <Button
         theme="green"
         size="small"
-        loading={event._id === loading}
+        $loading={event._id === loading}
         style={{ justifySelf: 'end' }}
         onClick={(click) => attendToEvent(click, event._id)}
       >

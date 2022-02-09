@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from 'react'
-import { Field, Form, Formik, FormikHelpers } from 'formik'
+import { Field, Form, Formik, FormikHelpers, FormikProps } from 'formik'
 import { validationSchema } from './schema'
 import { InputField } from '../../helpers/InputContainer'
 import { DatePickerField } from '../../helpers/DatePickerField'
@@ -55,11 +55,11 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
   }, [eventID])
 
   const initValues = {
-    capacity: '' || event?.capacity,
-    title: '' || event?.title,
-    description: '' || event?.description,
-    startsAt: '' || event?.startsAt,
-    time: '' || event?.startsAt,
+    capacity: event?.capacity || '',
+    title: event?.title || '',
+    description: event?.description || '',
+    startsAt: event?.startsAt || '',
+    time: event?.startsAt || '',
   }
 
   const createEventHandler = async (
@@ -127,7 +127,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
           onSubmit={createEventHandler}
           enableReinitialize={true}
         >
-          {(props) => (
+          {(props: FormikProps<EventFormFormik>) => (
             <Form>
               <FieldsContainer>
                 {eventID ? (
@@ -208,7 +208,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
                     type="submit"
                     theme="green"
                     size="main"
-                    loading={false}
+                    $loading={false}
                   >
                     create new event
                   </Button>

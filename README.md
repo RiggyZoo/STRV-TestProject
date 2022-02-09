@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+#EVENTIO
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a test project for STRV. it's a React app that allow users to see list of events with other people and create your own event. This project was created using [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## SET UP PROJECT
 
-In the project directory, you can run:
+To set up project you should follow the rules below:
 
 ### `yarn start`
 
