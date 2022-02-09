@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { validationSchema } from './schema'
-import { FieldsContainer } from './styles'
 import { InputField } from '../InputContainer'
 import { DatePickerField } from '../DatePickerField'
 import { Button } from '../../components/Button'
@@ -12,16 +11,31 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 import api from '../../api'
 import { AxiosResponse } from 'axios'
 import { EventFormFormik } from '../../types/events'
+import {
+  Title,
+  SubTitle,
+  EventFormContainer,
+  FieldsContainer,
+  HeaderWrapper,
+} from './styles'
 
 interface EventFormProps {
   onClose: () => void
   onReset: () => void
   eventID?: string
+  handleSubmit?: any
 }
 const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
   const history = useHistory()
   const [event, setEvent] = useState<any>()
+  const formRef = useRef<any>()
   const isBreakPoint = useMediaQuery(768)
+
+  const handleSubmitForm = () => {
+    if (formRef.current) {
+      formRef.current.submitForm()
+    }
+  }
 
   const fetchOneEvent = async (id: string) => {
     try {
@@ -97,101 +111,123 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
   }
   return (
     <>
-      <Formik
-        initialValues={initValues}
-        validationSchema={validationSchema}
-        onSubmit={createEventHandler}
-        enableReinitialize={true}
-      >
-        {(props) => (
-          <Form>
-            <FieldsContainer>
-              {eventID ? (
-                <>
-                  <Field
-                    name="startsAt"
-                    minDate={new Date()}
-                    label="Date"
-                    component={DatePickerField}
-                  />
-                  <Field
-                    selectedDateFromField={props.values.startsAt}
-                    isTime={true}
-                    disabled={!props.values.startsAt}
-                    minDate={new Date()}
-                    name="time"
-                    label="Time"
-                    component={DatePickerField}
-                  />
-                  <Field
-                    type="text"
-                    name="title"
-                    label="Title"
-                    component={InputField}
-                  />
-
-                  <Field
-                    type="text"
-                    name="description"
-                    label="Description"
-                    component={InputField}
-                  />
-                </>
-              ) : (
-                <>
-                  <Field
-                    type="text"
-                    name="title"
-                    label="Title"
-                    component={InputField}
-                  />
-
-                  <Field
-                    type="text"
-                    name="description"
-                    label="Description"
-                    component={InputField}
-                  />
-
-                  <Field
-                    name="startsAt"
-                    minDate={new Date()}
-                    label="Date"
-                    component={DatePickerField}
-                  />
-
-                  <Field
-                    selectedDateFromField={props.values.startsAt}
-                    isTime={true}
-                    disabled={!props.values.startsAt}
-                    minDate={new Date()}
-                    name="time"
-                    label="Time"
-                    component={DatePickerField}
-                  />
-                </>
-              )}
-
-              <Field name="capacity" label="Capacity" component={InputField} />
-            </FieldsContainer>
-            {!eventID ? (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button type="submit" theme="green" size="main" loading={false}>
-                  create new event
-                </Button>
-              </div>
-            ) : (
-              <CircleButtonLayout isMobile={!isBreakPoint} isConfirm={true}>
-                <CircleButton
-                  type="submit"
-                  disabled={props.isSubmitting}
-                  theme="confirm"
-                />
-              </CircleButtonLayout>
-            )}
-          </Form>
+      <EventFormContainer>
+        {!eventID && (
+          <HeaderWrapper>
+            {' '}
+            <Title>Create new event</Title>
+            <SubTitle>Enter details below.</SubTitle>
+          </HeaderWrapper>
         )}
-      </Formik>
+
+        <Formik
+          innerRef={formRef}
+          initialValues={initValues}
+          validationSchema={validationSchema}
+          onSubmit={createEventHandler}
+          enableReinitialize={true}
+        >
+          {(props) => (
+            <Form>
+              <FieldsContainer>
+                {eventID ? (
+                  <>
+                    <Field
+                      name="startsAt"
+                      minDate={new Date()}
+                      label="Date"
+                      component={DatePickerField}
+                    />
+                    <Field
+                      selectedDateFromField={props.values.startsAt}
+                      isTime={true}
+                      disabled={!props.values.startsAt}
+                      minDate={new Date()}
+                      name="time"
+                      label="Time"
+                      component={DatePickerField}
+                    />
+                    <Field
+                      type="text"
+                      name="title"
+                      label="Title"
+                      component={InputField}
+                    />
+
+                    <Field
+                      type="text"
+                      name="description"
+                      label="Description"
+                      component={InputField}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <Field
+                      type="text"
+                      name="title"
+                      label="Title"
+                      component={InputField}
+                    />
+
+                    <Field
+                      type="text"
+                      name="description"
+                      label="Description"
+                      component={InputField}
+                    />
+
+                    <Field
+                      name="startsAt"
+                      minDate={new Date()}
+                      label="Date"
+                      component={DatePickerField}
+                    />
+
+                    <Field
+                      selectedDateFromField={props.values.startsAt}
+                      isTime={true}
+                      disabled={!props.values.startsAt}
+                      minDate={new Date()}
+                      name="time"
+                      label="Time"
+                      component={DatePickerField}
+                    />
+                  </>
+                )}
+
+                <Field
+                  name="capacity"
+                  label="Capacity"
+                  component={InputField}
+                />
+              </FieldsContainer>
+              {!eventID && (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button
+                    type="submit"
+                    theme="green"
+                    size="main"
+                    loading={false}
+                  >
+                    create new event
+                  </Button>
+                </div>
+              )}
+            </Form>
+          )}
+        </Formik>
+      </EventFormContainer>
+
+      {eventID && (
+        <CircleButtonLayout>
+          <CircleButton
+            type="button"
+            theme="confirm"
+            onClick={() => handleSubmitForm()}
+          />
+        </CircleButtonLayout>
+      )}
     </>
   )
 }

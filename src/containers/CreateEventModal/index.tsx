@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import PageLayout from '../PageLayout'
 import { Formik, Field, Form, FormikHelpers } from 'formik'
 import { ErrorMessage, MainTitle } from '../LoginForm/styles'
-import { Container, Title, SubTitle, ModalWrapper } from './styles'
+import { Container, ModalWrapper } from './styles'
 import { EventForm } from '../EventForm'
 
 interface CreateModalProps {
@@ -22,8 +22,6 @@ const CreateEventModal: FC<CreateModalProps> = ({ onClose, onReset }) => {
     <PageLayout isModal={true} onClose={onClose}>
       <ModalWrapper>
         <Container>
-          <Title>Create new event</Title>
-          <SubTitle>Enter details below.</SubTitle>
           <EventForm onClose={onClose} onReset={onReset} />
         </Container>
       </ModalWrapper>

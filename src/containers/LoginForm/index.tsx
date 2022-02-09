@@ -39,18 +39,20 @@ const LoginForm: FC<{ isBreakPoint: boolean }> = ({ isBreakPoint }) => {
     actions.setSubmitting(true)
     setIsLoading(true)
     try {
-      await api.login(values).then((result: AxiosResponse) => {
-        console.log(result.headers.authorization)
-        if (result.status === 200) {
-          setAuthed(true)
-          setToken(result.headers.authorization)
-          setRefreshToken(result.headers['refresh-token'])
-          setUserInfo(result.data)
-          setUserData(result.data)
-        }
-        localStorage.setItem('events', 'all')
-        history.push('/events/all')
-      })
+      await api
+        .login({ ...values, email: values.email.toLowerCase() })
+        .then((result: AxiosResponse) => {
+          console.log(result.headers.authorization)
+          if (result.status === 200) {
+            setAuthed(true)
+            setToken(result.headers.authorization)
+            setRefreshToken(result.headers['refresh-token'])
+            setUserInfo(result.data)
+            setUserData(result.data)
+          }
+          localStorage.setItem('events', 'all')
+          history.push('/events/all')
+        })
     } catch (e: any) {
       console.log(e.response?.status)
       if (e.response.status === 400) {

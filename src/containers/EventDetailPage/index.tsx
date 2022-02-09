@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import PageLayout from '../../containers/PageLayout'
 import { useHistory, useParams } from 'react-router-dom'
 import {
@@ -28,6 +28,7 @@ import CreateEventModal from '../../containers/CreateEventModal'
 import CircleButtonLayout from '../../containers/CircleButtonLayout'
 import { CircleButton } from '../../components/CircleButton'
 import { Events } from '../../types/events'
+import { useFormikContext } from 'formik'
 
 interface Params {
   id: string
@@ -45,7 +46,6 @@ const EventDetail = () => {
   const isBreakPoint = useMediaQuery(768)
   const { id } = useParams<Params>()
 
-  console.log(isBreakPoint, 'isBreakPoint')
   const onReset = () => {
     setReset((reset) => !reset)
   }
@@ -97,92 +97,99 @@ const EventDetail = () => {
 
   return (
     <>
-      {isModal && (
+      {isModal ? (
         <CreateEventModal
           onClose={() => setIsModal(false)}
           onReset={() => setReset(!reset)}
         />
-      )}
+      ) : (
+        <>
+          <PageLayout isDetail={!isMyEvent}>
+            <ContentHeader>
+              <EventDetailTitle>{`Detail:${event?.id}`}</EventDetailTitle>
+              {isMyEvent && (
+                <DeleteButton onClick={() => onDeleteEvent(event?.id)}>
+                  <SvgElement src={TrashIcon} alt="icon" />
+                  {isBreakPoint && 'Delete event'}
+                </DeleteButton>
+              )}
+            </ContentHeader>
 
-      <PageLayout isDetail={!isMyEvent}>
-        <ContentHeader>
-          <EventDetailTitle>{`Detail:${event?.id}`}</EventDetailTitle>
-          {isMyEvent && (
-            <DeleteButton onClick={() => onDeleteEvent(event?.id)}>
-              <SvgElement src={TrashIcon} alt="icon" />
-              {isBreakPoint && 'Delete event'}
-            </DeleteButton>
-          )}
-        </ContentHeader>
-
-        <ContentWrapper>
-          {isMyEvent ? (
-            <EventFormContainer>
-              <EventForm
-                eventID={event?.id}
-                onClose={() => history.push('/events/all')}
-                onReset={() => {}}
-              />
-            </EventFormContainer>
-          ) : (
-            <EventDetailWrapper>
-              <EventBox style={{ minWidth: '100%' }}>
-                <EventBox.Date date={event?.startsAt} />
-                <EventBox.Name>{event?.title}</EventBox.Name>
-                <EventBox.Owner>
-                  {event?.owner.firstName} {event?.owner.lastName}
-                </EventBox.Owner>
-                <EventBox.Description>
-                  {event?.description}
-                </EventBox.Description>
-                <EventBox.Capacity
-                  attendees={event?.attendees.length}
-                  capacity={event?.capacity}
-                >
-                  {event &&
-                    defineButton(
-                      userData,
-                      event,
-                      history,
-                      onReset,
-                      isLoading,
-                      setIsLoading,
+            <ContentWrapper>
+              {isMyEvent ? (
+                <EventForm
+                  eventID={event?.id}
+                  onClose={() => history.push('/events/all')}
+                  onReset={() => {}}
+                />
+              ) : (
+                <EventDetailWrapper>
+                  <EventBox style={{ minWidth: '100%' }}>
+                    <EventBox.Date date={event?.startsAt} />
+                    <EventBox.Name>{event?.title}</EventBox.Name>
+                    <EventBox.Owner>
+                      {event?.owner.firstName} {event?.owner.lastName}
+                    </EventBox.Owner>
+                    <EventBox.Description>
+                      {event?.description}
+                    </EventBox.Description>
+                    <EventBox.Capacity
+                      attendees={event?.attendees.length}
+                      capacity={event?.capacity}
+                    >
+                      {event &&
+                        defineButton(
+                          userData,
+                          event,
+                          history,
+                          onReset,
+                          isLoading,
+                          setIsLoading,
+                        )}
+                    </EventBox.Capacity>
+                  </EventBox>
+                </EventDetailWrapper>
+              )}
+              {isBreakPoint ? (
+                <Attendees>
+                  <AttendTitle>Attendees</AttendTitle>
+                  <AttendItemWrapper>
+                    {amIAttended && (
+                      <AttendItem isMyEvent={true}>You</AttendItem>
                     )}
-                </EventBox.Capacity>
-              </EventBox>
-            </EventDetailWrapper>
-          )}
-          {isBreakPoint ? (
-            <Attendees>
-              <AttendTitle>Attendees</AttendTitle>
-              <AttendItemWrapper>
-                {amIAttended && <AttendItem isMyEvent={true}>You</AttendItem>}
-                {event?.attendees.map((item) => (
-                  <AttendItem key={item._id} isMyEvent={false}>
-                    {item.firstName} {item.lastName}
-                  </AttendItem>
-                ))}
-              </AttendItemWrapper>
-            </Attendees>
-          ) : !isMyEvent ? (
-            <Attendees>
-              <AttendTitle>Attendees</AttendTitle>
-              <AttendItemWrapper>
-                {amIAttended && <AttendItem isMyEvent={true}>You</AttendItem>}
-                {event?.attendees.map((item) => (
-                  <AttendItem key={item._id} isMyEvent={false}>
-                    {item.firstName} {item.lastName}
-                  </AttendItem>
-                ))}
-              </AttendItemWrapper>
-            </Attendees>
-          ) : null}
-        </ContentWrapper>
-      </PageLayout>
-      {!isModal && !isMyEvent && (
-        <CircleButtonLayout isConfirm={true}>
-          <CircleButton theme="default" onClick={() => setIsModal(true)} />
-        </CircleButtonLayout>
+                    {event?.attendees.map((item) => (
+                      <AttendItem key={item._id} isMyEvent={false}>
+                        {item.firstName} {item.lastName}
+                      </AttendItem>
+                    ))}
+                  </AttendItemWrapper>
+                </Attendees>
+              ) : !isMyEvent ? (
+                <Attendees>
+                  <AttendTitle>Attendees</AttendTitle>
+                  <AttendItemWrapper>
+                    {amIAttended && (
+                      <AttendItem isMyEvent={true}>You</AttendItem>
+                    )}
+                    {event?.attendees.map((item) => (
+                      <AttendItem key={item._id} isMyEvent={false}>
+                        {item.firstName} {item.lastName}
+                      </AttendItem>
+                    ))}
+                  </AttendItemWrapper>
+                </Attendees>
+              ) : null}
+            </ContentWrapper>
+            {!isModal && !isMyEvent && (
+              <CircleButtonLayout>
+                <CircleButton
+                  theme="default"
+                  onClick={() => setIsModal(true)}
+                />
+              </CircleButtonLayout>
+            )}
+          </PageLayout>
+        </>
       )}
     </>
   )
