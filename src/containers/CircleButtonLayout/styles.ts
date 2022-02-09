@@ -4,7 +4,7 @@ import { CircleButtonLayoutProps } from './index'
 
 export const Container = styled.div<CircleButtonLayoutProps>`
   /*  position: ${({ isMobile }) => (isMobile ? 'fixed' : 'sticky')};
-
+/*
   ${({ isMobile }) =>
     isMobile
       ? css`
@@ -16,7 +16,7 @@ export const Container = styled.div<CircleButtonLayoutProps>`
           bottom: 1.5rem;
           float: right;
           margin: 1.5rem 1.5rem;
-        `}*/
+        `}*!/*/
 
   ${({ isConfirm, isMobile }) =>
     isConfirm
@@ -26,13 +26,16 @@ export const Container = styled.div<CircleButtonLayoutProps>`
           bottom: ${isMobile ? '1.5rem' : '2rem'};
         `
       : css`
-          position: ${(isMobile) => (isMobile ? 'sticky' : 'fixed')};
+          /*  position: ${(isMobile) => (isMobile ? 'sticky' : 'sticky')};
           float: right;
           bottom: 2rem;
           right: 2rem;
-          margin: 1.5rem 1.5rem;
+          margin: 1.5rem 1.5rem;*/
+          display: flex;
+          justify-content: flex-end;
+          padding: 1.5rem 1rem 1rem;
           @media (min-width: ${breakPoints.small}) {
-            position: sticky;
+            position: fixed;
             right: 2rem;
             bottom: 2rem;
           }

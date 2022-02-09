@@ -201,13 +201,14 @@ const EventsPage = () => {
                 ),
               )}
           </Container>
+          {!isModal && (
+            <CircleButtonLayout>
+              <CircleButton theme="default" onClick={() => setIsModal(true)} />
+            </CircleButtonLayout>
+          )}
         </PageLayout>
       )}
-      {!isModal && (
-        <CircleButtonLayout>
-          <CircleButton theme="default" onClick={() => setIsModal(true)} />
-        </CircleButtonLayout>
-      )}
+
       {isLoadingPage && <Loader top="50%" right="50%" size="onPage" />}
     </>
   )

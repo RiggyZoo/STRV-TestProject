@@ -10,7 +10,9 @@ ReactDOM.render(
   <Router>
     <UserManager>
       <React.StrictMode>
-        <App />
+        <div style={{ height: '100%' }}>
+          <App />
+        </div>
       </React.StrictMode>
     </UserManager>
   </Router>,
