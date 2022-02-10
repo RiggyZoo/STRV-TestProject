@@ -17,6 +17,7 @@ import {
   EventFormContainer,
   FieldsContainer,
   HeaderWrapper,
+  ButtonWrapper,
 } from './styles'
 
 interface EventFormProps {
@@ -58,8 +59,8 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
     capacity: event?.capacity || '',
     title: event?.title || '',
     description: event?.description || '',
-    startsAt: event?.startsAt || '',
-    time: event?.startsAt || '',
+    startsAt: '' || event?.startsAt,
+    time: '' || event?.startsAt,
   }
 
   const createEventHandler = async (
@@ -203,7 +204,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
                 />
               </FieldsContainer>
               {!eventID && (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <ButtonWrapper>
                   <Button
                     type="submit"
                     theme="green"
@@ -212,7 +213,7 @@ const EventForm: FC<EventFormProps> = ({ onClose, onReset, eventID }) => {
                   >
                     create new event
                   </Button>
-                </div>
+                </ButtonWrapper>
               )}
             </Form>
           )}

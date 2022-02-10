@@ -42,3 +42,9 @@ export const HeaderWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+`
