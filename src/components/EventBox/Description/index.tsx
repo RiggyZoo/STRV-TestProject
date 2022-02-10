@@ -9,7 +9,7 @@ const Description: FC<{ isDetail?: boolean; isBreakPoint?: boolean }> = ({
   return (
     <>
       {isBreakPoint ? (
-        <Container isDetail={isDetail}>{children}</Container>
+        <Container isDetail={isDetail}>{children}aa</Container>
       ) : (
         <ContainerMobile isDetail={isDetail}>{children}</ContainerMobile>
       )}

@@ -6,7 +6,6 @@ import exp from 'constants'
 export const Container = styled.div<IEventBoxProps>`
   background: ${colors.white};
 
-  max-height: 18.5rem;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.108696);
   border-radius: 2px;
   padding: 2rem;

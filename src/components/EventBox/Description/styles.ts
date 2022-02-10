@@ -6,7 +6,7 @@ export const Container = styled.span<{
 }>`
   color: ${colors.greySecondary};
 
-  overflow: ${({ isDetail }) => (isDetail ? 'auto' : 'hidden')};
+  overflow: hidden;
   width: ${({ isDetail }) => (isDetail ? '100%' : '80%')};
   display: ${({ isDetail }) => (isDetail ? 'block' : '-webkit-box')};
 
@@ -18,7 +18,7 @@ export const Container = styled.span<{
 export const ContainerMobile = styled.div<{ isDetail?: boolean }>`
   color: ${colors.greySecondary};
 
-  overflow: ${({ isDetail }) => (isDetail ? 'auto' : 'hidden')};
+  overflow: hidden;
   width: ${({ isDetail }) => (isDetail ? '100%' : '80%')};
   display: ${({ isDetail }) => (isDetail ? 'block' : '-webkit-box')};
 

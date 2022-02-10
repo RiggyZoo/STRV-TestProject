@@ -52,7 +52,9 @@ export const EventBox = ({
           <Date date={date} />
           <Name>{name}</Name>
           <Owner>{owner}</Owner>
-          <Description isDetail={isDetail}>{description}</Description>
+          <Description isDetail={isDetail} isBreakPoint={isBreakPoint}>
+            {description}
+          </Description>
           <ContentWithButton>
             <Capacity attendees={attendees} capacity={capacity} />
             {children}
