@@ -130,6 +130,7 @@ const EventDetail = () => {
                   ) : (
                     <EventDetailWrapper>
                       <EventBox
+                        isDetail={true}
                         date={event?.startsAt}
                         attendees={event?.attendees.length}
                         capacity={event?.capacity}
@@ -157,9 +158,13 @@ const EventDetail = () => {
                           <AttendItem amIAttended={true}>You</AttendItem>
                         )}
                         {event?.attendees.map((item) => (
-                          <AttendItem key={item._id} amIAttended={false}>
-                            {item.firstName} {item.lastName}
-                          </AttendItem>
+                          <>
+                            {item._id !== userData._id && (
+                              <AttendItem key={item._id} amIAttended={false}>
+                                {item.firstName} {item.lastName}
+                              </AttendItem>
+                            )}
+                          </>
                         ))}
                       </AttendItemWrapper>
                     </Attendees>
@@ -171,9 +176,13 @@ const EventDetail = () => {
                           <AttendItem amIAttended={amIAttended}>You</AttendItem>
                         )}
                         {event?.attendees.map((item) => (
-                          <AttendItem key={item._id} amIAttended={false}>
-                            {item.firstName} {item.lastName}
-                          </AttendItem>
+                          <>
+                            {item._id !== userData._id && (
+                              <AttendItem key={item._id} amIAttended={false}>
+                                {item.firstName} {item.lastName}
+                              </AttendItem>
+                            )}
+                          </>
                         ))}
                       </AttendItemWrapper>
                     </Attendees>

@@ -1,16 +1,27 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { breakPoints, colors } from '../../../styles/themes'
 
-export const Container = styled.span`
+export const Container = styled.span<{
+  isDetail?: boolean
+}>`
   color: ${colors.greySecondary};
 
-  width: 100%;
+  overflow: ${({ isDetail }) => (isDetail ? 'auto' : 'hidden')};
+  width: ${({ isDetail }) => (isDetail ? '100%' : '80%')};
+  display: ${({ isDetail }) => (isDetail ? 'block' : '-webkit-box')};
 
   @media (min-width: ${breakPoints.small}) {
-    width: 80%;
-    display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
-    overflow: hidden;
   }
+`
+export const ContainerMobile = styled.div<{ isDetail?: boolean }>`
+  color: ${colors.greySecondary};
+
+  overflow: ${({ isDetail }) => (isDetail ? 'auto' : 'hidden')};
+  width: ${({ isDetail }) => (isDetail ? '100%' : '80%')};
+  display: ${({ isDetail }) => (isDetail ? 'block' : '-webkit-box')};
+
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 `

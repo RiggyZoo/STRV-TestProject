@@ -17,10 +17,12 @@ export interface IEventBoxProps {
   owner?: string
   capacity?: number
   attendees?: number
+  isDetail?: boolean
 }
 export const EventBox = ({
   children,
   onClick,
+  isDetail,
   style,
   date,
   description,
@@ -30,6 +32,7 @@ export const EventBox = ({
   attendees,
   capacity,
 }: IEventBoxProps) => {
+  console.log(isDetail, 'event bpx')
   return (
     <>
       {isBreakPoint ? (
@@ -37,7 +40,7 @@ export const EventBox = ({
           <Date date={date} />
           <Name>{name}</Name>
           <Owner>{owner}</Owner>
-          <Description>{description}</Description>
+          <Description isDetail={isDetail}>{description}</Description>
           <ContentWithButton>
             {' '}
             <Capacity attendees={attendees} capacity={capacity} />
@@ -49,7 +52,7 @@ export const EventBox = ({
           <Date date={date} />
           <Name>{name}</Name>
           <Owner>{owner}</Owner>
-          <Description>{description}</Description>
+          <Description isDetail={isDetail}>{description}</Description>
           <ContentWithButton>
             <Capacity attendees={attendees} capacity={capacity} />
             {children}

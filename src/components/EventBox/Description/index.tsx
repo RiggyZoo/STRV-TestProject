@@ -1,8 +1,20 @@
 import React, { FC } from 'react'
-import { Container } from './styles'
+import { Container, ContainerMobile } from './styles'
 
-const Description: FC = ({ children }) => {
-  return <Container>{children}</Container>
+const Description: FC<{ isDetail?: boolean; isBreakPoint?: boolean }> = ({
+  children,
+  isBreakPoint,
+  isDetail,
+}) => {
+  return (
+    <>
+      {isBreakPoint ? (
+        <Container isDetail={isDetail}>{children}</Container>
+      ) : (
+        <ContainerMobile isDetail={isDetail}>{children}</ContainerMobile>
+      )}
+    </>
+  )
 }
 
 export default Description

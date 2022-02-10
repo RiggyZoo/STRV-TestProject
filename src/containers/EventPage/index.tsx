@@ -165,6 +165,7 @@ const EventsPage = () => {
                   </EventBoxList>
                 ) : (
                   <EventBox
+                    isDetail={false}
                     isBreakPoint={isBreakPoint}
                     key={item._id}
                     onClick={() => history.push(`/events/${item._id}/detail`)}
